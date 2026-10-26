@@ -1,0 +1,39 @@
+<component name="InspectionProjectProfileManager">
+  <profile version="1.0">
+    <option name="myName" value="Project Default" />
+    <inspection_tool class="Eslint" enabled="true" level="WARNING" enabled_by_default="true" />
+    <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
+      <option name="ignoredPackages">
+        <list>
+          <option value="alembic" />
+          <option value="annotated-doc" />
+          <option value="annotated-types" />
+          <option value="anyio" />
+          <option value="argon2-cffi" />
+          <option value="argon2-cffi-bindings" />
+          <option value="asyncpg" />
+          <option value="cffi" />
+          <option value="click" />
+          <option value="dnspython" />
+          <option value="email-validator" />
+          <option value="fastapi" />
+          <option value="greenlet" />
+          <option value="h11" />
+          <option value="idna" />
+          <option value="mako" />
+          <option value="markupsafe" />
+          <option value="opentelemetry-api" />
+          <option value="pydantic" />
+          <option value="pydantic-core" />
+          <option value="pydantic-settings" />
+          <option value="python-dotenv" />
+          <option value="sqlalchemy" />
+          <option value="starlette" />
+          <option value="typing-extensions" />
+          <option value="typing-inspection" />
+          <option value="uvicorn" />
+        </list>
+      </option>
+    </inspection_tool>
+  </profile>
+</component>
