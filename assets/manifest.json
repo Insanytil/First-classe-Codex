@@ -1,0 +1,2124 @@
+{
+  "version": 1,
+  "scale": 2,
+  "sprites": {
+    "hero_body": {
+      "file": "characters/hero_body.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 4,
+      "rows": 4,
+      "display_size": [
+        64,
+        80
+      ],
+      "directions": [
+        "down",
+        "left",
+        "up",
+        "right"
+      ]
+    },
+    "hero_hair": {
+      "file": "characters/hero_hair.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 4,
+      "rows": 4,
+      "display_size": [
+        64,
+        80
+      ],
+      "directions": [
+        "down",
+        "left",
+        "up",
+        "right"
+      ]
+    },
+    "mira": {
+      "file": "characters/mira.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 4,
+      "rows": 1,
+      "display_size": [
+        64,
+        80
+      ],
+      "directions": [
+        "down"
+      ]
+    },
+    "merchant": {
+      "file": "characters/merchant.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 4,
+      "rows": 1,
+      "display_size": [
+        64,
+        80
+      ],
+      "directions": [
+        "down"
+      ]
+    },
+    "traveler": {
+      "file": "characters/traveler.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 4,
+      "rows": 1,
+      "display_size": [
+        64,
+        80
+      ],
+      "directions": [
+        "down"
+      ]
+    },
+    "wolf": {
+      "file": "enemies/wolf.png",
+      "cell": [
+        224,
+        256
+      ],
+      "columns": 4,
+      "rows": 1,
+      "display_size": [
+        56,
+        64
+      ],
+      "directions": [
+        "down"
+      ]
+    },
+    "flan": {
+      "file": "enemies/flan.png",
+      "cell": [
+        224,
+        256
+      ],
+      "columns": 4,
+      "rows": 1,
+      "display_size": [
+        56,
+        64
+      ],
+      "directions": [
+        "down"
+      ]
+    },
+    "boss": {
+      "file": "enemies/boss.png",
+      "cell": [
+        768,
+        512
+      ],
+      "columns": 4,
+      "rows": 1,
+      "display_size": [
+        180,
+        120
+      ],
+      "directions": [
+        "down"
+      ],
+      "anchors": [
+        [
+          384,
+          502
+        ],
+        [
+          384,
+          502
+        ],
+        [
+          384,
+          502
+        ],
+        [
+          384,
+          502
+        ]
+      ]
+    },
+    "terrain": {
+      "file": "tilesets/dalmasca.png",
+      "cell": [
+        96,
+        96
+      ],
+      "columns": 8,
+      "rows": 6,
+      "display_size": [
+        48,
+        48
+      ],
+      "terrain_order": [
+        "g",
+        "t",
+        "d",
+        "w",
+        "b",
+        "s"
+      ]
+    },
+    "house": {
+      "file": "props/house.png",
+      "cell": [
+        384,
+        288
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        192,
+        144
+      ]
+    },
+    "tent": {
+      "file": "props/tent.png",
+      "cell": [
+        288,
+        192
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        144,
+        96
+      ]
+    },
+    "wagon": {
+      "file": "props/wagon.png",
+      "cell": [
+        288,
+        192
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        144,
+        96
+      ]
+    },
+    "gate": {
+      "file": "props/gate.png",
+      "cell": [
+        480,
+        288
+      ],
+      "columns": 2,
+      "rows": 1,
+      "display_size": [
+        240,
+        144
+      ]
+    },
+    "tree": {
+      "file": "props/tree.png",
+      "cell": [
+        128,
+        192
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        64,
+        96
+      ]
+    },
+    "fire": {
+      "file": "props/fire.png",
+      "cell": [
+        96,
+        128
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        48,
+        64
+      ]
+    },
+    "pillar": {
+      "file": "props/pillar.png",
+      "cell": [
+        96,
+        128
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        48,
+        64
+      ]
+    },
+    "altar": {
+      "file": "props/altar.png",
+      "cell": [
+        96,
+        128
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        48,
+        64
+      ]
+    },
+    "stone": {
+      "file": "props/stone.png",
+      "cell": [
+        96,
+        128
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        48,
+        64
+      ]
+    },
+    "sign": {
+      "file": "props/sign.png",
+      "cell": [
+        96,
+        128
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        48,
+        64
+      ]
+    },
+    "crate": {
+      "file": "props/crate.png",
+      "cell": [
+        96,
+        128
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        48,
+        64
+      ]
+    },
+    "fire_projectile": {
+      "file": "effects/fire.png",
+      "cell": [
+        128,
+        96
+      ],
+      "columns": 8,
+      "rows": 1,
+      "display_size": [
+        64,
+        48
+      ]
+    },
+    "hero_sword": {
+      "file": "animations/hero_sword_body.png",
+      "cell": [
+        448,
+        384
+      ],
+      "columns": 8,
+      "rows": 1,
+      "display_size": [
+        280,
+        240
+      ],
+      "directions": [
+        "right"
+      ],
+      "anchors": [
+        [
+          224,
+          376
+        ],
+        [
+          224,
+          376
+        ],
+        [
+          224,
+          376
+        ],
+        [
+          224,
+          376
+        ],
+        [
+          224,
+          376
+        ],
+        [
+          224,
+          376
+        ],
+        [
+          199,
+          376
+        ],
+        [
+          224,
+          376
+        ]
+      ]
+    },
+    "hero_sword_hair": {
+      "file": "animations/hero_sword_hair.png",
+      "cell": [
+        448,
+        384
+      ],
+      "columns": 8,
+      "rows": 1,
+      "display_size": [
+        280,
+        240
+      ],
+      "directions": [
+        "right"
+      ],
+      "anchors": [
+        [
+          224,
+          376
+        ],
+        [
+          224,
+          376
+        ],
+        [
+          224,
+          376
+        ],
+        [
+          224,
+          376
+        ],
+        [
+          224,
+          376
+        ],
+        [
+          224,
+          376
+        ],
+        [
+          199,
+          376
+        ],
+        [
+          224,
+          376
+        ]
+      ]
+    },
+    "wolf_claw": {
+      "file": "animations/wolf_claw.png",
+      "cell": [
+        384,
+        256
+      ],
+      "columns": 8,
+      "rows": 1,
+      "display_size": [
+        192,
+        128
+      ],
+      "directions": [
+        "left"
+      ],
+      "anchors": [
+        [
+          192,
+          248
+        ],
+        [
+          192,
+          248
+        ],
+        [
+          192,
+          248
+        ],
+        [
+          192,
+          248
+        ],
+        [
+          192,
+          248
+        ],
+        [
+          192,
+          248
+        ],
+        [
+          192,
+          248
+        ],
+        [
+          192,
+          248
+        ]
+      ]
+    },
+    "slime_jump": {
+      "file": "animations/slime_jump.png",
+      "cell": [
+        256,
+        256
+      ],
+      "columns": 8,
+      "rows": 1,
+      "display_size": [
+        140,
+        128
+      ],
+      "directions": [
+        "left"
+      ],
+      "anchors": [
+        [
+          128,
+          248
+        ],
+        [
+          128,
+          248
+        ],
+        [
+          128,
+          248
+        ],
+        [
+          128,
+          248
+        ],
+        [
+          128,
+          248
+        ],
+        [
+          128,
+          248
+        ],
+        [
+          128,
+          248
+        ],
+        [
+          128,
+          248
+        ]
+      ]
+    },
+    "cloud": {
+      "file": "prologue/cloud.png",
+      "cell": [
+        768,
+        512
+      ],
+      "columns": 4,
+      "rows": 1,
+      "display_size": [
+        420,
+        280
+      ],
+      "directions": [
+        "right"
+      ],
+      "anchors": [
+        [
+          307,
+          504
+        ],
+        [
+          286,
+          504
+        ],
+        [
+          44,
+          504
+        ],
+        [
+          307,
+          504
+        ]
+      ]
+    },
+    "sephiroth": {
+      "file": "prologue/sephiroth.png",
+      "cell": [
+        640,
+        640
+      ],
+      "columns": 4,
+      "rows": 1,
+      "display_size": [
+        440,
+        440
+      ],
+      "directions": [
+        "left"
+      ],
+      "anchors": [
+        [
+          320,
+          632
+        ],
+        [
+          320,
+          632
+        ],
+        [
+          320,
+          632
+        ],
+        [
+          320,
+          632
+        ]
+      ]
+    },
+    "nibelheim": {
+      "file": "prologue/nibelheim.png",
+      "cell": [
+        1672,
+        941
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        1280,
+        800
+      ]
+    },
+    "map_camp": {
+      "file": "maps/camp.png",
+      "cell": [
+        1578,
+        997
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        912,
+        576
+      ]
+    },
+    "map_road": {
+      "file": "maps/road.png",
+      "cell": [
+        1577,
+        997
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        912,
+        576
+      ]
+    },
+    "map_bridge": {
+      "file": "maps/bridge.png",
+      "cell": [
+        1577,
+        997
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        912,
+        576
+      ]
+    },
+    "map_ruins": {
+      "file": "maps/ruins.png",
+      "cell": [
+        1578,
+        997
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        912,
+        576
+      ]
+    },
+    "map_gate": {
+      "file": "maps/gate.png",
+      "cell": [
+        1578,
+        996
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        912,
+        576
+      ]
+    },
+    "battle_dalmasca": {
+      "file": "maps/battle.png",
+      "cell": [
+        1774,
+        887
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        912,
+        442
+      ]
+    },
+    "map_gate_open": {
+      "file": "maps/gate_open.png",
+      "cell": [
+        1579,
+        996
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        912,
+        576
+      ]
+    },
+    "portrait_merchant": {
+      "file": "characters/portrait_merchant.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        112,
+        128
+      ]
+    },
+    "portrait_traveler": {
+      "file": "characters/portrait_traveler.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        112,
+        128
+      ]
+    },
+    "sentinel_strike": {
+      "file": "animations/sentinel_strike.png",
+      "cell": [
+        768,
+        512
+      ],
+      "columns": 8,
+      "rows": 1,
+      "display_size": [
+        336,
+        224
+      ],
+      "directions": [
+        "left"
+      ],
+      "anchors": [
+        [
+          384,
+          502
+        ],
+        [
+          384,
+          502
+        ],
+        [
+          384,
+          502
+        ],
+        [
+          384,
+          502
+        ],
+        [
+          384,
+          502
+        ],
+        [
+          384,
+          502
+        ],
+        [
+          384,
+          502
+        ],
+        [
+          384,
+          502
+        ]
+      ]
+    },
+    "portrait_boss": {
+      "file": "characters/portrait_boss.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        112,
+        128
+      ]
+    },
+    "portrait_mira": {
+      "file": "characters/portrait_mira.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        112,
+        128
+      ]
+    },
+    "weapon_iron_sword": {
+      "file": "weapons/iron_sword.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        64,
+        80
+      ],
+      "grip": [
+        128,
+        262
+      ]
+    },
+    "weapon_dawn_sword": {
+      "file": "weapons/dawn_sword.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        64,
+        80
+      ],
+      "grip": [
+        128,
+        262
+      ]
+    },
+    "weapon_ash_staff": {
+      "file": "weapons/ash_staff.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        64,
+        80
+      ],
+      "grip": [
+        128,
+        208
+      ]
+    },
+    "weapon_astral_staff": {
+      "file": "weapons/astral_staff.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        64,
+        80
+      ],
+      "grip": [
+        128,
+        208
+      ]
+    },
+    "weapon_oak_bow": {
+      "file": "weapons/oak_bow.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        64,
+        80
+      ],
+      "grip": [
+        128,
+        160
+      ]
+    },
+    "weapon_sylvan_bow": {
+      "file": "weapons/sylvan_bow.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        64,
+        80
+      ],
+      "grip": [
+        128,
+        160
+      ]
+    },
+    "weapon_steel_hammer": {
+      "file": "weapons/steel_hammer.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        64,
+        80
+      ],
+      "grip": [
+        128,
+        220
+      ]
+    },
+    "weapon_oath_hammer": {
+      "file": "weapons/oath_hammer.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        64,
+        80
+      ],
+      "grip": [
+        128,
+        220
+      ]
+    },
+    "class_warrior": {
+      "file": "classes/warrior.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 4,
+      "rows": 4,
+      "display_size": [
+        64,
+        80
+      ],
+      "directions": [
+        "down",
+        "left",
+        "up",
+        "right"
+      ],
+      "anchors": [
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ]
+      ],
+      "hands": [
+        [
+          173,
+          191,
+          -25
+        ],
+        [
+          176,
+          191,
+          -25
+        ],
+        [
+          174,
+          193,
+          -25
+        ],
+        [
+          177,
+          193,
+          -25
+        ],
+        [
+          90,
+          189,
+          25
+        ],
+        [
+          88,
+          189,
+          25
+        ],
+        [
+          84,
+          189,
+          25
+        ],
+        [
+          89,
+          188,
+          25
+        ],
+        [
+          170,
+          183,
+          25
+        ],
+        [
+          177,
+          183,
+          25
+        ],
+        [
+          174,
+          183,
+          25
+        ],
+        [
+          174,
+          183,
+          25
+        ],
+        [
+          173,
+          189,
+          -25
+        ],
+        [
+          175,
+          189,
+          -25
+        ],
+        [
+          179,
+          189,
+          -25
+        ],
+        [
+          174,
+          188,
+          -25
+        ]
+      ]
+    },
+    "class_warrior_hair": {
+      "file": "classes/warrior_hair.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 4,
+      "rows": 4,
+      "display_size": [
+        64,
+        80
+      ],
+      "directions": [
+        "down",
+        "left",
+        "up",
+        "right"
+      ]
+    },
+    "class_warrior_action": {
+      "file": "classes/warrior_action.png",
+      "cell": [
+        512,
+        448
+      ],
+      "columns": 8,
+      "rows": 1,
+      "display_size": [
+        280,
+        245
+      ],
+      "directions": [
+        "right"
+      ],
+      "anchors": [
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ]
+      ],
+      "hands": [
+        [
+          335,
+          288,
+          -25
+        ],
+        [
+          340,
+          302,
+          35
+        ],
+        [
+          271,
+          179,
+          70
+        ],
+        [
+          324,
+          333,
+          -105
+        ],
+        [
+          373,
+          268,
+          -110
+        ],
+        [
+          364,
+          278,
+          -125
+        ],
+        [
+          324,
+          275,
+          -25
+        ],
+        [
+          328,
+          269,
+          -25
+        ]
+      ]
+    },
+    "class_warrior_action_hair": {
+      "file": "classes/warrior_action_hair.png",
+      "cell": [
+        512,
+        448
+      ],
+      "columns": 8,
+      "rows": 1,
+      "display_size": [
+        280,
+        245
+      ],
+      "directions": [
+        "right"
+      ]
+    },
+    "class_mage": {
+      "file": "classes/mage.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 4,
+      "rows": 4,
+      "display_size": [
+        64,
+        80
+      ],
+      "directions": [
+        "down",
+        "left",
+        "up",
+        "right"
+      ],
+      "anchors": [
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ]
+      ],
+      "hands": [
+        [
+          171,
+          188,
+          0
+        ],
+        [
+          178,
+          189,
+          0
+        ],
+        [
+          175,
+          189,
+          0
+        ],
+        [
+          177,
+          189,
+          0
+        ],
+        [
+          91,
+          186,
+          0
+        ],
+        [
+          87,
+          186,
+          0
+        ],
+        [
+          84,
+          187,
+          0
+        ],
+        [
+          89,
+          186,
+          0
+        ],
+        [
+          174,
+          182,
+          0
+        ],
+        [
+          178,
+          182,
+          0
+        ],
+        [
+          178,
+          182,
+          0
+        ],
+        [
+          178,
+          182,
+          0
+        ],
+        [
+          171,
+          186,
+          0
+        ],
+        [
+          176,
+          186,
+          0
+        ],
+        [
+          179,
+          187,
+          0
+        ],
+        [
+          173,
+          186,
+          0
+        ]
+      ]
+    },
+    "class_mage_hair": {
+      "file": "classes/mage_hair.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 4,
+      "rows": 4,
+      "display_size": [
+        64,
+        80
+      ],
+      "directions": [
+        "down",
+        "left",
+        "up",
+        "right"
+      ]
+    },
+    "class_mage_action": {
+      "file": "classes/mage_action.png",
+      "cell": [
+        512,
+        448
+      ],
+      "columns": 8,
+      "rows": 1,
+      "display_size": [
+        280,
+        245
+      ],
+      "directions": [
+        "right"
+      ],
+      "anchors": [
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ]
+      ],
+      "hands": [
+        [
+          241,
+          278,
+          0
+        ],
+        [
+          218,
+          180,
+          20
+        ],
+        [
+          287,
+          207,
+          -10
+        ],
+        [
+          351,
+          201,
+          -20
+        ],
+        [
+          361,
+          213,
+          -20
+        ],
+        [
+          367,
+          218,
+          -15
+        ],
+        [
+          295,
+          308,
+          0
+        ],
+        [
+          245,
+          290,
+          0
+        ]
+      ]
+    },
+    "class_mage_action_hair": {
+      "file": "classes/mage_action_hair.png",
+      "cell": [
+        512,
+        448
+      ],
+      "columns": 8,
+      "rows": 1,
+      "display_size": [
+        280,
+        245
+      ],
+      "directions": [
+        "right"
+      ]
+    },
+    "class_ranger": {
+      "file": "classes/ranger.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 4,
+      "rows": 4,
+      "display_size": [
+        64,
+        80
+      ],
+      "directions": [
+        "down",
+        "left",
+        "up",
+        "right"
+      ],
+      "anchors": [
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ]
+      ],
+      "hands": [
+        [
+          168,
+          185,
+          0
+        ],
+        [
+          180,
+          185,
+          0
+        ],
+        [
+          174,
+          185,
+          0
+        ],
+        [
+          178,
+          185,
+          0
+        ],
+        [
+          90,
+          178,
+          0
+        ],
+        [
+          88,
+          179,
+          0
+        ],
+        [
+          86,
+          179,
+          0
+        ],
+        [
+          87,
+          178,
+          0
+        ],
+        [
+          170,
+          175,
+          0
+        ],
+        [
+          179,
+          174,
+          0
+        ],
+        [
+          172,
+          174,
+          0
+        ],
+        [
+          172,
+          174,
+          0
+        ],
+        [
+          175,
+          176,
+          0
+        ],
+        [
+          175,
+          176,
+          0
+        ],
+        [
+          179,
+          176,
+          0
+        ],
+        [
+          178,
+          175,
+          0
+        ]
+      ]
+    },
+    "class_ranger_hair": {
+      "file": "classes/ranger_hair.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 4,
+      "rows": 4,
+      "display_size": [
+        64,
+        80
+      ],
+      "directions": [
+        "down",
+        "left",
+        "up",
+        "right"
+      ]
+    },
+    "class_ranger_action": {
+      "file": "classes/ranger_action.png",
+      "cell": [
+        512,
+        448
+      ],
+      "columns": 8,
+      "rows": 1,
+      "display_size": [
+        280,
+        245
+      ],
+      "directions": [
+        "right"
+      ],
+      "anchors": [
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ]
+      ],
+      "hands": [
+        [
+          357,
+          246,
+          0
+        ],
+        [
+          358,
+          237,
+          0
+        ],
+        [
+          358,
+          235,
+          0
+        ],
+        [
+          364,
+          235,
+          0
+        ],
+        [
+          354,
+          248,
+          0
+        ],
+        [
+          353,
+          262,
+          0
+        ],
+        [
+          306,
+          302,
+          0
+        ],
+        [
+          299,
+          309,
+          0
+        ]
+      ]
+    },
+    "class_ranger_action_hair": {
+      "file": "classes/ranger_action_hair.png",
+      "cell": [
+        512,
+        448
+      ],
+      "columns": 8,
+      "rows": 1,
+      "display_size": [
+        280,
+        245
+      ],
+      "directions": [
+        "right"
+      ]
+    },
+    "class_paladin": {
+      "file": "classes/paladin.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 4,
+      "rows": 4,
+      "display_size": [
+        64,
+        80
+      ],
+      "directions": [
+        "down",
+        "left",
+        "up",
+        "right"
+      ],
+      "anchors": [
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ],
+        [
+          128,
+          310
+        ]
+      ],
+      "hands": [
+        [
+          174,
+          184,
+          -25
+        ],
+        [
+          176,
+          184,
+          -25
+        ],
+        [
+          178,
+          184,
+          -25
+        ],
+        [
+          175,
+          184,
+          -25
+        ],
+        [
+          90,
+          182,
+          25
+        ],
+        [
+          86,
+          183,
+          25
+        ],
+        [
+          84,
+          183,
+          25
+        ],
+        [
+          84,
+          183,
+          25
+        ],
+        [
+          176,
+          178,
+          25
+        ],
+        [
+          180,
+          178,
+          25
+        ],
+        [
+          180,
+          178,
+          25
+        ],
+        [
+          180,
+          178,
+          25
+        ],
+        [
+          175,
+          185,
+          -25
+        ],
+        [
+          175,
+          185,
+          -25
+        ],
+        [
+          172,
+          187,
+          -25
+        ],
+        [
+          174,
+          186,
+          -25
+        ]
+      ]
+    },
+    "class_paladin_hair": {
+      "file": "classes/paladin_hair.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 4,
+      "rows": 4,
+      "display_size": [
+        64,
+        80
+      ],
+      "directions": [
+        "down",
+        "left",
+        "up",
+        "right"
+      ]
+    },
+    "class_paladin_action": {
+      "file": "classes/paladin_action.png",
+      "cell": [
+        512,
+        448
+      ],
+      "columns": 8,
+      "rows": 1,
+      "display_size": [
+        280,
+        245
+      ],
+      "directions": [
+        "right"
+      ],
+      "anchors": [
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ],
+        [
+          256,
+          438
+        ]
+      ],
+      "hands": [
+        [
+          353,
+          273,
+          -20
+        ],
+        [
+          344,
+          286,
+          25
+        ],
+        [
+          266,
+          200,
+          65
+        ],
+        [
+          263,
+          206,
+          70
+        ],
+        [
+          373,
+          242,
+          -105
+        ],
+        [
+          338,
+          350,
+          -140
+        ],
+        [
+          343,
+          322,
+          -35
+        ],
+        [
+          339,
+          266,
+          -20
+        ]
+      ]
+    },
+    "class_paladin_action_hair": {
+      "file": "classes/paladin_action_hair.png",
+      "cell": [
+        512,
+        448
+      ],
+      "columns": 8,
+      "rows": 1,
+      "display_size": [
+        280,
+        245
+      ],
+      "directions": [
+        "right"
+      ]
+    }
+  },
+  "style": "illustrated",
+  "character_revision": 2,
+  "class_revision": 1
+}

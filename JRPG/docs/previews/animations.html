@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fr">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JRPG · cartes et attaques animées</title>
+<style>
+  body { margin: 32px auto; padding: 0 20px; max-width: 1100px; background: #14232a; color: #eee3cd; font: 17px system-ui, sans-serif; }
+  h1 { color: #e2bd7f; } p { line-height: 1.6; }
+  button, select { font: inherit; color: inherit; background: #29454a; border: 1px solid #729c92; border-radius: 6px; padding: 9px 15px; margin: 0 8px 18px 0; }
+  canvas { display: block; width: 100%; height: auto; border-radius: 10px; background: #1e363e; }
+</style>
+<h1>JRPG · cartes et attaques animées</h1>
+<p>Captures des scènes du jeu : ambiance au repos, puis poses d’attaque avec contact à 0,24 seconde. Cet aperçu fonctionne hors ligne.</p>
+<label for="scene">Scène :</label>
+<select id="scene">
+  <option value="living-village">Clairval · reflets de l’étang</option>
+  <option value="living-forest">Forêt · rivière et feuillage</option>
+  <option value="living-ruins">Ruines · braises et lucioles</option>
+  <option value="attack-wolf">Loup · attaque de griffes</option>
+  <option value="attack-slime">Flan · saut et réception</option>
+</select>
+<button id="toggle" type="button">Pause</button>
+<p id="status" aria-live="polite"></p>
+<canvas width="640" height="360" aria-label="Capture animée du jeu JRPG"></canvas>
+<script>
+  const canvas = document.querySelector('canvas');
+  const context = canvas.getContext('2d');
+  const select = document.getElementById('scene');
+  const toggle = document.getElementById('toggle');
+  const status = document.getElementById('status');
+  const image = new Image();
+  let playing = true, elapsed = 0, last = null, ready = false;
+  function load() {
+    ready = false; elapsed = 0; status.textContent = 'Chargement de la capture…';
+    image.src = select.value + '.png';
+  }
+  image.onload = () => { ready = true; status.textContent = ''; };
+  image.onerror = () => { status.textContent = 'Capture manquante : exécuter tools/preview_living_world.py depuis JRPG.'; };
+  select.addEventListener('change', load);
+  toggle.addEventListener('click', () => { playing = !playing; toggle.textContent = playing ? 'Pause' : 'Reprendre'; });
+  function animate(time) {
+    if (last !== null && playing && ready) elapsed += time - last;
+    last = time;
+    const attack = select.value.startsWith('attack-');
+    const moments = attack ? [0,80,160,240,320,440,560,700] : [0,250,500,750,1000,1250,1500,1750];
+    const position = elapsed % (attack ? 950 : 2000);
+    let frame = 0;
+    for (let index = 0; index < moments.length; index++) if (position >= moments[index]) frame = index;
+    if (ready) context.drawImage(image, 0, frame * 360, 640, 360, 0, 0, 640, 360);
+    requestAnimationFrame(animate);
+  }
+  load(); requestAnimationFrame(animate);
+</script>
+</html>

@@ -1,0 +1,48 @@
+{
+  "version": 1,
+  "generator": "OpenAI imagegen intégré",
+  "prompts": "docs/art/WORLD_PROMPTS.md",
+  "registration": "JRPG.presentation.world_art.REGISTRATIONS",
+  "provenance": "Créations originales pour JRPG ; références visuelles des peintures du prototype poo.",
+  "maps": {
+    "village": {
+      "file": "village-v1.png",
+      "sha256": "e277b3d4c11162fa0b474150d3e4f8fc873a3a326e9d829dd2409b60505f534c",
+      "dimensions": [
+        1512,
+        1040
+      ],
+      "layout": "docs/art/layouts/village-layout.png",
+      "world_size": [
+        1024,
+        704
+      ]
+    },
+    "forest": {
+      "file": "forest-v1.png",
+      "sha256": "8e0410b0b729464834c2e2db8b180941b7a19902a49fa15f674f2db643337cf7",
+      "dimensions": [
+        1619,
+        971
+      ],
+      "layout": "docs/art/layouts/forest-layout.png",
+      "world_size": [
+        1280,
+        768
+      ]
+    },
+    "ruins": {
+      "file": "ruins-v1.png",
+      "sha256": "b2c1afaaa8a71c42e950a5478601df20843c0983b05214fa55a4e3d4884c0c71",
+      "dimensions": [
+        1512,
+        1040
+      ],
+      "layout": "docs/art/layouts/ruins-layout.png",
+      "world_size": [
+        1024,
+        704
+      ]
+    }
+  }
+}

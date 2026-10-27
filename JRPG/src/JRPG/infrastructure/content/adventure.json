@@ -1,0 +1,551 @@
+{
+  "version": 1,
+  "equipment": [
+    {
+      "id": "iron_sword",
+      "name": "Épée de fer",
+      "category": "weapon",
+      "slots": [
+        "weapon"
+      ],
+      "classes": [
+        "guerrier"
+      ],
+      "modifiers": {
+        "strength": 4
+      }
+    },
+    {
+      "id": "oak_staff",
+      "name": "Bâton de chêne",
+      "category": "weapon",
+      "slots": [
+        "weapon"
+      ],
+      "classes": [
+        "mage"
+      ],
+      "modifiers": {
+        "magic": 4
+      }
+    },
+    {
+      "id": "healing_wand",
+      "name": "Baguette de soin",
+      "category": "weapon",
+      "slots": [
+        "weapon"
+      ],
+      "classes": [
+        "soigneur"
+      ],
+      "modifiers": {
+        "magic": 3
+      }
+    },
+    {
+      "id": "twin_daggers",
+      "name": "Dagues jumelles",
+      "category": "weapon",
+      "slots": [
+        "weapon"
+      ],
+      "classes": [
+        "voleur"
+      ],
+      "modifiers": {
+        "strength": 3,
+        "speed": 1
+      }
+    },
+    {
+      "id": "steel_sword",
+      "name": "Épée d’acier",
+      "category": "weapon",
+      "slots": [
+        "weapon"
+      ],
+      "classes": [
+        "guerrier"
+      ],
+      "modifiers": {
+        "strength": 9
+      }
+    },
+    {
+      "id": "travel_cloak",
+      "name": "Cape de voyage",
+      "category": "armor",
+      "slots": [
+        "body"
+      ],
+      "classes": [],
+      "modifiers": {
+        "hp": 20,
+        "defense": 2
+      }
+    },
+    {
+      "id": "bronze_ring",
+      "name": "Anneau de bronze",
+      "category": "accessory",
+      "slots": [
+        "accessory_1",
+        "accessory_2"
+      ],
+      "classes": [],
+      "modifiers": {
+        "mp": 6,
+        "magic": 2
+      }
+    }
+  ],
+  "quests": [
+    {
+      "id": "road",
+      "name": "La route de Clairval",
+      "description": "Aidez Éline : libérez la forêt des loups puis revenez la voir.",
+      "objectives": [
+        {
+          "id": "forest",
+          "description": "Rejoindre la forêt",
+          "event": "map_entered",
+          "subjects": [
+            "forest"
+          ]
+        },
+        {
+          "id": "wolves",
+          "description": "Vaincre les loups du sentier",
+          "event": "encounter_cleared",
+          "subjects": [
+            "forest_wolves"
+          ]
+        }
+      ],
+      "reward": {
+        "experience": 60,
+        "gold": 30,
+        "items": [
+          {
+            "id": "potion",
+            "quantity": 2
+          }
+        ]
+      }
+    },
+    {
+      "id": "sanctuary",
+      "name": "La mémoire de Sylve",
+      "description": "Lisez l’inscription auprès de l’archiviste et vainquez les gardiens des ruines.",
+      "prerequisites": [
+        "road"
+      ],
+      "objectives": [
+        {
+          "id": "ruins",
+          "description": "Visiter les ruines",
+          "event": "map_entered",
+          "subjects": [
+            "ruins"
+          ]
+        },
+        {
+          "id": "inscription",
+          "description": "Lire l’inscription de l’archiviste",
+          "event": "flag_set",
+          "subjects": [
+            "inscription_lue"
+          ]
+        },
+        {
+          "id": "guardians",
+          "description": "Vaincre les gardiens",
+          "event": "encounter_cleared",
+          "subjects": [
+            "ruins_guardians"
+          ]
+        }
+      ],
+      "reward": {
+        "experience": 120,
+        "gold": 80,
+        "items": [
+          {
+            "id": "bronze_ring",
+            "quantity": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": "river_cache",
+      "name": "Le coffre de la rive",
+      "description": "Le voyageur cherche quelqu’un pour retrouver un coffre au bord de la rivière.",
+      "objectives": [
+        {
+          "id": "cache",
+          "description": "Ouvrir le coffre de la rive ouest",
+          "event": "chest_opened",
+          "subjects": [
+            "forest_chest"
+          ]
+        }
+      ],
+      "reward": {
+        "experience": 30,
+        "gold": 25,
+        "items": []
+      }
+    }
+  ],
+  "shops": [
+    {
+      "id": "oren",
+      "name": "Échoppe d’Oren",
+      "offers": [
+        {
+          "item": "potion",
+          "buy": 15,
+          "sell": 7,
+          "stock": 8
+        },
+        {
+          "item": "phoenix",
+          "buy": 35,
+          "sell": 15,
+          "stock": 3
+        },
+        {
+          "item": "steel_sword",
+          "buy": 55,
+          "sell": 25,
+          "stock": 1
+        },
+        {
+          "item": "travel_cloak",
+          "buy": 35,
+          "sell": 15,
+          "stock": 4
+        },
+        {
+          "item": "bronze_ring",
+          "buy": 30,
+          "sell": 12,
+          "stock": 2
+        },
+        {
+          "item": "iron_sword",
+          "buy": 25,
+          "sell": 10,
+          "stock": 0
+        },
+        {
+          "item": "oak_staff",
+          "buy": 25,
+          "sell": 10,
+          "stock": 0
+        },
+        {
+          "item": "healing_wand",
+          "buy": 25,
+          "sell": 10,
+          "stock": 0
+        },
+        {
+          "item": "twin_daggers",
+          "buy": 25,
+          "sell": 10,
+          "stock": 0
+        }
+      ]
+    }
+  ],
+  "dialogues": [
+    {
+      "id": "eline",
+      "start": "root",
+      "nodes": [
+        {
+          "id": "root",
+          "text": "Clairval compte sur vous. Parcourez la forêt, puis retrouvez la mémoire des ruines. Que souhaitez-vous faire ?",
+          "choices": [
+            {
+              "id": "accept_road",
+              "label": "Accepter : libérer la route",
+              "next": "root",
+              "conditions": [
+                {
+                  "quest": "road",
+                  "states": [
+                    "available"
+                  ]
+                }
+              ],
+              "effects": [
+                {
+                  "operation": "accept_quest",
+                  "reference": "road"
+                }
+              ]
+            },
+            {
+              "id": "claim_road",
+              "label": "Recevoir la récompense de la route",
+              "next": "root",
+              "conditions": [
+                {
+                  "quest": "road",
+                  "states": [
+                    "completed"
+                  ]
+                }
+              ],
+              "effects": [
+                {
+                  "operation": "claim_quest",
+                  "reference": "road"
+                }
+              ]
+            },
+            {
+              "id": "accept_sanctuary",
+              "label": "Accepter : la mémoire de Sylve",
+              "next": "root",
+              "conditions": [
+                {
+                  "quest": "sanctuary",
+                  "states": [
+                    "available"
+                  ]
+                }
+              ],
+              "effects": [
+                {
+                  "operation": "accept_quest",
+                  "reference": "sanctuary"
+                }
+              ]
+            },
+            {
+              "id": "claim_sanctuary",
+              "label": "Conclure notre aventure",
+              "next": "ending",
+              "conditions": [
+                {
+                  "quest": "sanctuary",
+                  "states": [
+                    "completed"
+                  ]
+                }
+              ],
+              "effects": [
+                {
+                  "operation": "claim_quest",
+                  "reference": "sanctuary"
+                },
+                {
+                  "operation": "set_flag",
+                  "reference": "adventure_complete"
+                }
+              ]
+            },
+            {
+              "id": "ending",
+              "label": "Se souvenir du voyage",
+              "next": "ending",
+              "conditions": [
+                {
+                  "flag": "adventure_complete"
+                }
+              ],
+              "effects": []
+            },
+            {
+              "id": "rest",
+              "label": "Se reposer à Clairval",
+              "next": "root",
+              "conditions": [],
+              "effects": [
+                {
+                  "operation": "rest"
+                }
+              ]
+            },
+            {
+              "id": "leave",
+              "label": "Repartir",
+              "next": null,
+              "conditions": [],
+              "effects": []
+            }
+          ]
+        },
+        {
+          "id": "ending",
+          "text": "Les routes sont sûres et l’inscription de Sylve a retrouvé sa voix. Votre groupe a achevé ce voyage. Merci, compagnons de Clairval.",
+          "choices": [
+            {
+              "id": "explore",
+              "label": "Continuer à explorer",
+              "next": null,
+              "conditions": [],
+              "effects": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "oren",
+      "start": "root",
+      "nodes": [
+        {
+          "id": "root",
+          "text": "Bienvenue chez Oren. Potions, vêtements et armes pour votre groupe : mes stocks sont limités.",
+          "choices": [
+            {
+              "id": "shop",
+              "label": "Acheter ou vendre",
+              "next": null,
+              "conditions": [],
+              "effects": [
+                {
+                  "operation": "open_shop",
+                  "reference": "oren"
+                }
+              ]
+            },
+            {
+              "id": "leave",
+              "label": "Repartir",
+              "next": null,
+              "conditions": [],
+              "effects": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "traveler",
+      "start": "root",
+      "nodes": [
+        {
+          "id": "root",
+          "text": "Un coffre attend sur la rive ouest, au nord du pont. Si vous le retrouvez, je saurai vous remercier.",
+          "choices": [
+            {
+              "id": "accept",
+              "label": "Accepter la recherche",
+              "next": "root",
+              "conditions": [
+                {
+                  "quest": "river_cache",
+                  "states": [
+                    "available"
+                  ]
+                }
+              ],
+              "effects": [
+                {
+                  "operation": "accept_quest",
+                  "reference": "river_cache"
+                }
+              ]
+            },
+            {
+              "id": "claim",
+              "label": "Recevoir la récompense",
+              "next": "root",
+              "conditions": [
+                {
+                  "quest": "river_cache",
+                  "states": [
+                    "completed"
+                  ]
+                }
+              ],
+              "effects": [
+                {
+                  "operation": "claim_quest",
+                  "reference": "river_cache"
+                }
+              ]
+            },
+            {
+              "id": "leave",
+              "label": "Repartir",
+              "next": null,
+              "conditions": [],
+              "effects": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "scholar",
+      "start": "root",
+      "nodes": [
+        {
+          "id": "root",
+          "text": "Cette pierre parle des anciens gardiens de Sylve. Écoutons-la, puis rendez la route aux voyageurs.",
+          "choices": [
+            {
+              "id": "read",
+              "label": "Lire l’inscription",
+              "next": "read",
+              "conditions": [],
+              "effects": [
+                {
+                  "operation": "set_flag",
+                  "reference": "inscription_lue"
+                }
+              ]
+            },
+            {
+              "id": "leave",
+              "label": "Repartir",
+              "next": null,
+              "conditions": [],
+              "effects": []
+            }
+          ]
+        },
+        {
+          "id": "read",
+          "text": "« Que ceux qui traversent Sylve protègent les chemins et transmettent notre mémoire. » Les mots restent gravés dans votre esprit.",
+          "choices": [
+            {
+              "id": "leave",
+              "label": "Quitter la stèle",
+              "next": null,
+              "conditions": [],
+              "effects": []
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "npc_dialogues": {
+    "mira_village": "eline",
+    "village_guard": "oren",
+    "forest_traveler": "traveler",
+    "ruins_scholar": "scholar"
+  },
+  "flags": [
+    "inscription_lue",
+    "adventure_complete"
+  ],
+  "flag_conditions": [
+    {
+      "flag": "adventure_complete",
+      "quest": "sanctuary",
+      "states": [
+        "rewarded"
+      ]
+    }
+  ]
+}

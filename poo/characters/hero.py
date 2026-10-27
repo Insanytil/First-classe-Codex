@@ -1,4 +1,7 @@
+from __future__ import annotations
+
 from typing import TYPE_CHECKING
+from poo.characters.jobs import WEAPONS, job
 
 if TYPE_CHECKING:  # pour l'éditeur seulement : monster.py importe déjà hero.py
     from poo.characters import Monster
@@ -17,11 +20,14 @@ class Hero:
             defense: int = 1,
             resistance: int = 1,
             level: int = 1,
-            potions: int = 3
+            potions: int = 3,
+            class_id: str = 'warrior'
 
     ):
         if min(strength, magic, defense, resistance, level) < 1:
             raise ValueError("Toutes les statistiques doivent au moins être égale ou supérieure à 1")
+        if potions < 0:
+            raise ValueError("Le nombre de potions doit être positif ou nul")
         self.name = name
         self._level: int = level
         self._strength: int = strength
@@ -36,6 +42,38 @@ class Hero:
         self._gil: int = 0
 
         self._potions: int = potions
+        self.defending = False
+        self.class_id = job(class_id).id
+        self.weapons = {self.job.starter}
+        self.weapon_id = self.job.starter
+        self.shield = 0
+
+    @property
+    def job(self):
+        return job(self.class_id)
+
+    @property
+    def weapon(self):
+        return WEAPONS[self.weapon_id]
+
+    def equip(self, weapon_id: str) -> bool:
+        if weapon_id not in self.weapons or weapon_id not in WEAPONS:
+            return False
+        if WEAPONS[weapon_id].job != self.class_id:
+            return False
+        self.weapon_id = weapon_id
+        return True
+
+    def buy_weapon(self, weapon_id: str) -> bool:
+        weapon = WEAPONS.get(weapon_id)
+        if weapon is None or weapon.job != self.class_id or weapon_id in self.weapons or self.gil < weapon.price:
+            return False
+        self.gil -= weapon.price
+        self.weapons.add(weapon_id)
+        return True
+
+    def restore_mp(self, amount: int) -> None:
+        self.mp = min(self.max_mp, self.mp + max(0, amount))
     # ------- Getter and Setter ---------
     @property
     def name(self) -> str:
@@ -45,29 +83,29 @@ class Hero:
         value = name_value.strip()
 
         if not value:
-            raise ValueError("Name must not be empty")
+            raise ValueError("Le nom ne peut pas être vide")
 
         if len(value) < 3:
-            raise ValueError("Name must not be less than 3 characters")
+            raise ValueError("Le nom doit contenir au moins 3 lettres")
 
         if any(char.isdigit() for char in value):
-            raise ValueError("Name must not contain digit")
+            raise ValueError("Le nom ne doit pas contenir de chiffres")
         if not value.isalpha():
-            raise ValueError("Name must only contain alphanumeric characters")
+            raise ValueError("Le nom doit contenir uniquement des lettres")
 
         self._name = value
     @property
     def strength(self) -> int:
-        return self._strength
+        return self._strength + self.weapon.strength
     @property
     def magic(self) -> int:
-        return self._magic
+        return self._magic + self.weapon.magic
     @property
     def defense(self) -> int:
-        return self._defense
+        return self._defense + self.weapon.defense
     @property
     def resistance(self) -> int:
-        return self._resistance
+        return self._resistance + self.weapon.resistance
     @property
     def hp(self) -> int:
         return self._hp
@@ -144,6 +182,13 @@ class Hero:
         if not self.is_alive:
             return 0
 
+        if val < 0:
+            raise ValueError("Les dégâts doivent être positifs ou nuls")
+        if self.defending:
+            val = max(1, val // 2) if val else 0
+        absorbed = min(self.shield, val)
+        self.shield -= absorbed
+        val -= absorbed
         lost = min(val, self._hp)
         self._hp -= lost
         return lost
@@ -151,6 +196,8 @@ class Hero:
     def heal(self, val: int) -> int:
         if not self.is_alive:
             return 0
+        if val < 0:
+            raise ValueError("Les soins doivent être positifs ou nuls")
         gain = min(val, self._max_hp - self._hp)
 
         self._hp += gain
@@ -177,7 +224,9 @@ class Hero:
             return 0
 
     def add_potion(self, potions: int):
-        self.potions += self.potions + potions
+        if potions < 0:
+            raise ValueError("Le nombre de potions doit être positif ou nul")
+        self.potions += potions
 
     def gain_xp(self, amount:int) -> int:
         if amount < 0:

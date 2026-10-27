@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from poo.characters import Hero
 
 
@@ -21,6 +23,8 @@ class Monster:
     ):
         if min(strength, magic, defense, resistance, level) < 1:
             raise ValueError("Toutes les statistiques doivent au moins être égale ou supérieure à 1")
+        if hp <= 0 or mp < 0 or xp < 0 or gil < 0:
+            raise ValueError("PV doit être positif ; PM, XP et gils doivent être positifs ou nuls")
         self.name = name
         self._level: int = level
         self._strength: int = strength
@@ -104,6 +108,8 @@ class Monster:
         if not self.is_alive:
             return 0
 
+        if val < 0:
+            raise ValueError("Les dégâts doivent être positifs ou nuls")
         lost = min(val, self._hp)
         self._hp -= lost
         return lost
@@ -111,6 +117,8 @@ class Monster:
     def heal(self, val: int) -> int:
         if not self.is_alive:
             return 0
+        if val < 0:
+            raise ValueError("Les soins doivent être positifs ou nuls")
         gain = min(val, self._max_hp - self._hp)
 
         self._hp += gain

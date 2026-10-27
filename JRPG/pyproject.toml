@@ -1,0 +1,42 @@
+[build-system]
+requires = ["hatchling>=1.26,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "technobel-jrpg"
+version = "0.1.0"
+description = "JRPG — fondations métier indépendantes de Pygame"
+requires-python = ">=3.15"
+dependencies = ["pygame-ce>=2.5.8,<3"]
+
+[project.scripts]
+jrpg = "JRPG.bootstrap:main"
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "pytest-cov>=6,<8", "ruff>=0.11,<1", "mypy>=1.15,<2"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/JRPG"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--import-mode=importlib --strict-config --strict-markers"
+
+[tool.ruff]
+target-version = "py315"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.mypy]
+python_version = "3.15"
+strict = true
+files = ["src", "tests", "examples", "tools"]
+
+[tool.coverage.run]
+source = ["JRPG"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true

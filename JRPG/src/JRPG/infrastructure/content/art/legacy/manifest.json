@@ -1,0 +1,423 @@
+{
+  "version": 1,
+  "provenance": "Images imagegen historiques du projet poo, réutilisées avec autorisation utilisateur, sources inchangées.",
+  "sprites": {
+    "wolf": {
+      "file": "wolf.png",
+      "cell": [
+        224,
+        256
+      ],
+      "columns": 4,
+      "rows": 1,
+      "display_size": [
+        56,
+        64
+      ],
+      "directions": [
+        "down"
+      ],
+      "origin": "assets/enemies/wolf.png",
+      "sha256": "527f75a03b8322f5214185547a663153191f6c99087da2a0ef84d3aafc1cce27"
+    },
+    "flan": {
+      "file": "flan.png",
+      "cell": [
+        224,
+        256
+      ],
+      "columns": 4,
+      "rows": 1,
+      "display_size": [
+        56,
+        64
+      ],
+      "directions": [
+        "down"
+      ],
+      "origin": "assets/enemies/flan.png",
+      "sha256": "4cc9ea0d403f99bd0836afbddc8a03917bc8384b669bdf708fe911ba02036e33"
+    },
+    "boss": {
+      "file": "boss.png",
+      "cell": [
+        768,
+        512
+      ],
+      "columns": 4,
+      "rows": 1,
+      "display_size": [
+        180,
+        120
+      ],
+      "directions": [
+        "down"
+      ],
+      "anchors": [
+        [
+          384,
+          502
+        ],
+        [
+          384,
+          502
+        ],
+        [
+          384,
+          502
+        ],
+        [
+          384,
+          502
+        ]
+      ],
+      "origin": "assets/enemies/boss.png",
+      "sha256": "93c1d23d9c566168ae85fb1ed9b31e720f7c97a1db16cc310fb2dff5d4d18a81"
+    },
+    "wolf_claw": {
+      "file": "wolf_claw.png",
+      "cell": [
+        384,
+        256
+      ],
+      "columns": 8,
+      "rows": 1,
+      "display_size": [
+        192,
+        128
+      ],
+      "directions": [
+        "left"
+      ],
+      "anchors": [
+        [
+          192,
+          248
+        ],
+        [
+          192,
+          248
+        ],
+        [
+          192,
+          248
+        ],
+        [
+          192,
+          248
+        ],
+        [
+          192,
+          248
+        ],
+        [
+          192,
+          248
+        ],
+        [
+          192,
+          248
+        ],
+        [
+          192,
+          248
+        ]
+      ],
+      "origin": "assets/animations/wolf_claw.png",
+      "sha256": "41e56325f46b992dc0a166db76edf19bf3aaae6761fd4e70208ea086ea6586d1"
+    },
+    "slime_jump": {
+      "file": "slime_jump.png",
+      "cell": [
+        256,
+        256
+      ],
+      "columns": 8,
+      "rows": 1,
+      "display_size": [
+        140,
+        128
+      ],
+      "directions": [
+        "left"
+      ],
+      "anchors": [
+        [
+          128,
+          248
+        ],
+        [
+          128,
+          248
+        ],
+        [
+          128,
+          248
+        ],
+        [
+          128,
+          248
+        ],
+        [
+          128,
+          248
+        ],
+        [
+          128,
+          248
+        ],
+        [
+          128,
+          248
+        ],
+        [
+          128,
+          248
+        ]
+      ],
+      "origin": "assets/animations/slime_jump.png",
+      "sha256": "45a3eebcbbc440b298687f3ba4502f1d33f1df70171a3b16fe05001ae0ecdfa0"
+    },
+    "sentinel_strike": {
+      "file": "sentinel_strike.png",
+      "cell": [
+        768,
+        512
+      ],
+      "columns": 8,
+      "rows": 1,
+      "display_size": [
+        336,
+        224
+      ],
+      "directions": [
+        "left"
+      ],
+      "anchors": [
+        [
+          384,
+          502
+        ],
+        [
+          384,
+          502
+        ],
+        [
+          384,
+          502
+        ],
+        [
+          384,
+          502
+        ],
+        [
+          384,
+          502
+        ],
+        [
+          384,
+          502
+        ],
+        [
+          384,
+          502
+        ],
+        [
+          384,
+          502
+        ]
+      ],
+      "origin": "assets/animations/sentinel_strike.png",
+      "sha256": "fc27f8bd0e0b75ebf6af3ccd3b11490b0b6a57d9791d5970afeb888d67b2ac2c"
+    },
+    "mira": {
+      "file": "mira.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 4,
+      "rows": 1,
+      "display_size": [
+        64,
+        80
+      ],
+      "directions": [
+        "down"
+      ],
+      "origin": "assets/characters/mira.png",
+      "sha256": "e477828debf253304e37d5bb696f31e9633c7af1a2e14fb5c1037af434656414"
+    },
+    "merchant": {
+      "file": "merchant.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 4,
+      "rows": 1,
+      "display_size": [
+        64,
+        80
+      ],
+      "directions": [
+        "down"
+      ],
+      "origin": "assets/characters/merchant.png",
+      "sha256": "f972dc7139e874d5080553109b384924d32f7bf2c6c7a487a35057f38e2c1f0a"
+    },
+    "traveler": {
+      "file": "traveler.png",
+      "cell": [
+        256,
+        320
+      ],
+      "columns": 4,
+      "rows": 1,
+      "display_size": [
+        64,
+        80
+      ],
+      "directions": [
+        "down"
+      ],
+      "origin": "assets/characters/traveler.png",
+      "sha256": "bf3c003cb3ebd5df349c863153a64b4a573fe0c66a36e543139a57ee660b9c7d"
+    },
+    "tree": {
+      "file": "tree.png",
+      "cell": [
+        128,
+        192
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        64,
+        96
+      ],
+      "origin": "assets/props/tree.png",
+      "sha256": "c07467942721af2cfaad7acb26e85dc1630ad79ec68f59ac475e8be5a409bb64"
+    },
+    "pillar": {
+      "file": "pillar.png",
+      "cell": [
+        96,
+        128
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        48,
+        64
+      ],
+      "origin": "assets/props/pillar.png",
+      "sha256": "0a27a847374f4bfbb49187c03cbcdff7747855062f4773cd2d84cd5628bdb73d"
+    },
+    "house": {
+      "file": "house.png",
+      "cell": [
+        384,
+        288
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        192,
+        144
+      ],
+      "origin": "assets/props/house.png",
+      "sha256": "efd0c4ba2e11f0c30f72df0a19eb5edc60fab8ac8fc45a0da0fbee9a34bc3bb9"
+    },
+    "fire": {
+      "file": "fire.png",
+      "cell": [
+        96,
+        128
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        48,
+        64
+      ],
+      "origin": "assets/props/fire.png",
+      "sha256": "464052135e68c6e476c4d7482c581ad1eeaf10f8c9b032171c3f64499a5ce636"
+    },
+    "altar": {
+      "file": "altar.png",
+      "cell": [
+        96,
+        128
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        48,
+        64
+      ],
+      "origin": "assets/props/altar.png",
+      "sha256": "ffde85fa9364f5cc8a09b925dd31a65f9ac8120d3279f7553ac6748485bb39dd"
+    },
+    "stone": {
+      "file": "stone.png",
+      "cell": [
+        96,
+        128
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        48,
+        64
+      ],
+      "origin": "assets/props/stone.png",
+      "sha256": "1b40325b1a040b87d443f7a4a29190549160094ff20800602cf16e904277d665"
+    },
+    "sign": {
+      "file": "sign.png",
+      "cell": [
+        96,
+        128
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        48,
+        64
+      ],
+      "origin": "assets/props/sign.png",
+      "sha256": "fb2727d80a262c93f5183e8184384c03fa0ce7e7aac3a333115d234676bb0a93"
+    },
+    "crate": {
+      "file": "crate.png",
+      "cell": [
+        96,
+        128
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        48,
+        64
+      ],
+      "origin": "assets/props/crate.png",
+      "sha256": "e397bd79ccbf5927de7e7c3408bd75f69ff8e630f15a0022512c8478b92df3b4"
+    },
+    "battle_dalmasca": {
+      "file": "battle_dalmasca.png",
+      "cell": [
+        1774,
+        887
+      ],
+      "columns": 1,
+      "rows": 1,
+      "display_size": [
+        912,
+        442
+      ],
+      "origin": "assets/maps/battle.png",
+      "sha256": "25146834eebc64f239ee29f27285a62f4c664c18133ecded726b74423aaff3ad"
+    }
+  }
+}
