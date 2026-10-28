@@ -12,9 +12,13 @@ class AtlasSpec:
     cell: tuple[int, int]
     count: int = 1
     anchor: tuple[int, int] | None = None
+    folder: str = "legacy"
 
 
 SHEETS = {
+    "wisp": AtlasSpec((256, 192), 12, (128, 184), "creatures"),
+    "briar": AtlasSpec((256, 192), 12, (128, 184), "creatures"),
+    "raven": AtlasSpec((256, 192), 12, (128, 184), "creatures"),
     "wolf": AtlasSpec((224, 256), 4),
     "flan": AtlasSpec((224, 256), 4),
     "boss": AtlasSpec((768, 512), 4, (384, 502)),
@@ -34,11 +38,15 @@ SHEETS = {
     "crate": AtlasSpec((96, 128)),
 }
 ENEMY_SHEETS = {
+    "wisp": ("wisp", "wisp"),
+    "briar": ("briar", "briar"),
+    "raven": ("raven", "raven"),
     "wolf": ("wolf", "wolf_claw"),
     "slime": ("flan", "slime_jump"),
     "boss": ("boss", "sentinel_strike"),
 }
 NPC_SHEETS = {
+    "village_herbalist": "traveler",
     "mira_village": "mira",
     "village_guard": "merchant",
     "forest_traveler": "traveler",
@@ -74,7 +82,9 @@ class PaintedSprites:
             if name not in self._atlases:
                 data = (
                     files("JRPG")
-                    .joinpath("infrastructure", "content", "art", "legacy", f"{name}.png")
+                    .joinpath(
+                        "infrastructure", "content", "art", specification.folder, f"{name}.png"
+                    )
                     .read_bytes()
                 )
                 atlas = pygame.image.load(BytesIO(data))

@@ -23,13 +23,19 @@ from JRPG.presentation.world_art import Registration, WorldArt
 
 
 def test_embedded_legacy_sprites_match_source_hashes_and_dimensions() -> None:
-    root = files("JRPG").joinpath("infrastructure", "content", "art", "legacy")
-    manifest = json.loads(root.joinpath("manifest.json").read_text(encoding="utf-8"))
     for name, specification in SHEETS.items():
-        entry = manifest["sprites"][name]
+        root = files("JRPG").joinpath("infrastructure", "content", "art", specification.folder)
+        manifest = json.loads(root.joinpath("manifest.json").read_text(encoding="utf-8"))
+        entry = manifest["sprites" if specification.folder == "legacy" else "creatures"][name]
         data = root.joinpath(entry["file"]).read_bytes()
         assert hashlib.sha256(data).hexdigest() == entry["sha256"]
-        assert entry["origin"].startswith("assets/")
+        if specification.folder == "legacy":
+            assert entry["origin"].startswith("assets/")
+        else:
+            assert (
+                hashlib.sha256(root.joinpath(entry["source"]).read_bytes()).hexdigest()
+                == entry["source_sha256"]
+            )
         assert tuple(entry["cell"]) == specification.cell
         image = pygame.image.load(BytesIO(data))
         assert image.get_size() == (

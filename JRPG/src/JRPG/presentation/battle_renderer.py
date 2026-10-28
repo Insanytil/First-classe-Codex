@@ -69,7 +69,18 @@ class BattleRenderer:
         surface.fill((0, 0, 0, 0))
         hits: list[HitRegion] = []
         self._ui.panel(surface, pygame.Rect(12, 9, 616, 28))
-        self._ui.text(surface, "CLAIRIÈRE DES RUINES", (23, 18), 15, GOLD)
+        boss = next(
+            (
+                fighter
+                for fighter in controller.displayed
+                if fighter.side == Side.ENEMIES and enemy_kind(fighter.id) == "boss"
+            ),
+            None,
+        )
+        title = controller.threat_hint or (
+            boss.name.upper() if boss is not None else "CLAIRIÈRE DES RUINES"
+        )
+        self._ui.text(surface, title, (23, 18), 13 if controller.threat_hint else 15, GOLD, 375)
         battle = controller.encounter.battle
         current = battle.current
         label = f"Tour {battle.turn_id}"
@@ -102,6 +113,7 @@ class BattleRenderer:
                 StatusKind.PARALYSIS: "PAR",
                 StatusKind.SILENCE: "SIL",
                 StatusKind.MODIFIER: "EFF",
+                StatusKind.CHARGING: "CHARGE",
             }
             status = "/".join(status_labels[entry.definition.kind] for entry in fighter.statuses)
             self._ui.text(
@@ -169,7 +181,9 @@ class BattleRenderer:
             index = counts[fighter.side]
             counts[fighter.side] += 1
             centers[fighter.id] = (
-                (420, 75 + index * 43) if fighter.side == Side.ALLIES else (219, 95 + index * 53)
+                (420, 75 + index * 43)
+                if fighter.side == Side.ALLIES
+                else ((260, 155) if enemy_kind(fighter.id) == "boss" else (219, 95 + index * 53))
             )
         return centers
 
@@ -227,15 +241,33 @@ class BattleRenderer:
         if kind is not None:
             idle, action = ENEMY_SHEETS[kind]
             monster_frame = int(self._time * 3) % 4
-            sheet, height = idle, 68
-            if attacking and playback is not None:
+            sheet, height = idle, 110 if kind == "boss" else 68
+            charging = any(
+                fighter.id == identity and fighter.has_status(StatusKind.CHARGING)
+                for fighter in controller.displayed
+            )
+            telegraphing = (
+                attacking
+                and playback is not None
+                and playback.result.command.targets == (identity,)
+            )
+            if (
+                kind == "boss"
+                and (charging or telegraphing)
+                and not (attacking and not telegraphing)
+            ):
+                monster_frame = 3
+                pygame.draw.ellipse(surface, GOLD, (x - 34, ground_y + 4, 68, 17), 2)
+            elif attacking and playback is not None:
                 monster_frame = contact_frame(
                     playback.elapsed,
                     Playback.IMPACT,
                     Playback.DURATION,
                     5 if kind == "slime" else 4,
                 )
-                sheet, height = action, 74
+                sheet, height = action, 118 if kind == "boss" else 74
+                if kind in {"wisp", "briar", "raven"}:
+                    monster_frame += 4
             self._monsters.draw(surface, sheet, (x, y + 13), monster_frame, height, flip=True)
             return
         if ally:
@@ -278,6 +310,7 @@ class BattleRenderer:
             if playback.elapsed < Playback.IMPACT and event.kind in {
                 EventKind.DAMAGE,
                 EventKind.HEAL,
+                EventKind.MANA_RESTORED,
                 EventKind.REVIVED,
             }:
                 color = JADE if event.kind != EventKind.DAMAGE else GOLD
@@ -285,17 +318,22 @@ class BattleRenderer:
             if 0 <= progress < 1 and event.kind in {
                 EventKind.DAMAGE,
                 EventKind.HEAL,
+                EventKind.MANA_RESTORED,
                 EventKind.REVIVED,
                 EventKind.MISS,
             }:
-                healing = event.kind in {EventKind.HEAL, EventKind.REVIVED}
+                healing = event.kind in {EventKind.HEAL, EventKind.REVIVED, EventKind.MANA_RESTORED}
                 color = JADE if healing else GOLD if event.critical else (245, 203, 165)
+                if event.kind == EventKind.MANA_RESTORED:
+                    color = (109, 164, 222)
                 value = (
                     "Raté"
                     if event.kind == EventKind.MISS
                     else f"{'+' if healing else '-'}{event.amount}"
                 )
                 self._ui.text(surface, value, (x - 12, y - 35 - int(progress * 15)), 23, color)
+                if event.kind == EventKind.MANA_RESTORED:
+                    self._ui.text(surface, "PM", (x + 20, y - 30 - int(progress * 15)), 12, color)
 
     def _menu(
         self, surface: pygame.Surface, controller: BattleController, hits: list[HitRegion]

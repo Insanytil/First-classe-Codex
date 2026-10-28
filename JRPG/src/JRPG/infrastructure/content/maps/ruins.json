@@ -97,6 +97,27 @@
       "x": 14,
       "y": 17,
       "message": "Les pierres se souviennent des voyageurs. Au-delà des piliers repose un ancien coffre."
+    },
+    {
+      "id": "ruins_sentinel",
+      "name": "Sentinelle de Sylve",
+      "kind": "encounter",
+      "x": 16,
+      "y": 3,
+      "enemies": [
+        "boss"
+      ]
+    },
+    {
+      "id": "ruins_wisps",
+      "name": "Spectres de Sylve",
+      "kind": "encounter",
+      "x": 27,
+      "y": 12,
+      "enemies": [
+        "wisp",
+        "slime"
+      ]
     }
   ],
   "decorations": [

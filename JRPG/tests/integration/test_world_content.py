@@ -9,6 +9,7 @@ from JRPG.domain.combat.model import Outcome
 from JRPG.domain.errors import DomainError
 from JRPG.domain.items import ItemCategory, ItemDefinition
 from JRPG.domain.world import MapPosition, World
+from JRPG.infrastructure.training_encounter import create_combat_setup
 from JRPG.infrastructure.world_content import (
     ContentError,
     JsonMapLoader,
@@ -18,12 +19,10 @@ from tests.world_helpers import finish_battle, walk_to
 
 
 def loader() -> JsonMapLoader:
+    factory = create_combat_setup().factory
     return JsonMapLoader(
-        (
-            ItemDefinition("potion", "Potion", ItemCategory.CONSUMABLE),
-            ItemDefinition("phoenix", "Plume de vie", ItemCategory.CONSUMABLE),
-        ),
-        frozenset({"wolf", "slime"}),
+        tuple(entry.item for entry in factory.consumables),
+        frozenset(factory.enemies),
     )
 
 

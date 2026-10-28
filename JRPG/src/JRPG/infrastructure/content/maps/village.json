@@ -93,6 +93,14 @@
       "x": 25,
       "y": 8,
       "message": "Les loups ne vous poursuivront pas. Approchez-les et appuyez sur E pour les affronter. Une victoire libère le passage de leur présence."
+    },
+    {
+      "id": "village_herbalist",
+      "name": "Tala",
+      "kind": "npc",
+      "x": 11,
+      "y": 13,
+      "message": "La réserve de remèdes attend au sud-ouest de la forêt."
     }
   ],
   "decorations": [

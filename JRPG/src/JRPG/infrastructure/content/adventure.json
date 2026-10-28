@@ -98,6 +98,50 @@
         "mp": 6,
         "magic": 2
       }
+    },
+    {
+      "id": "sylve_sigil",
+      "name": "Sceau de Sylve",
+      "category": "accessory",
+      "slots": [
+        "accessory_1",
+        "accessory_2"
+      ],
+      "classes": [],
+      "modifiers": {
+        "hp": 24,
+        "resistance": 4
+      }
+    },
+    {
+      "id": "linen_hood",
+      "name": "Capuche de lin",
+      "category": "armor",
+      "slots": [
+        "head"
+      ],
+      "classes": [],
+      "modifiers": {
+        "hp": 8,
+        "defense": 2,
+        "resistance": 3
+      }
+    },
+    {
+      "id": "round_shield",
+      "name": "Bouclier rond",
+      "category": "armor",
+      "slots": [
+        "off_hand"
+      ],
+      "classes": [
+        "guerrier"
+      ],
+      "modifiers": {
+        "defense": 5,
+        "resistance": 2,
+        "accuracy": -2
+      }
     }
   ],
   "quests": [
@@ -132,7 +176,8 @@
             "quantity": 2
           }
         ]
-      }
+      },
+      "kind": "main"
     },
     {
       "id": "sanctuary",
@@ -176,7 +221,37 @@
             "quantity": 1
           }
         ]
-      }
+      },
+      "kind": "main"
+    },
+    {
+      "id": "sentinel",
+      "name": "Le serment de la Sentinelle",
+      "description": "La mémoire de Sylve a éveillé sa gardienne. Acceptez le dernier défi auprès d’Éline, puis affrontez la Sentinelle au nord des ruines. Son grand balayage est annoncé un tour à l’avance : protégez le groupe.",
+      "prerequisites": [
+        "sanctuary"
+      ],
+      "objectives": [
+        {
+          "id": "sentinel",
+          "description": "Vaincre la Sentinelle de Sylve",
+          "event": "encounter_cleared",
+          "subjects": [
+            "ruins_sentinel"
+          ]
+        }
+      ],
+      "reward": {
+        "experience": 120,
+        "gold": 80,
+        "items": [
+          {
+            "id": "sylve_sigil",
+            "quantity": 1
+          }
+        ]
+      },
+      "kind": "main"
     },
     {
       "id": "river_cache",
@@ -196,7 +271,63 @@
         "experience": 30,
         "gold": 25,
         "items": []
-      }
+      },
+      "kind": "side"
+    },
+    {
+      "id": "herbal_route",
+      "name": "Les remèdes de Clairval",
+      "description": "Tala souhaite vérifier la réserve de remèdes au sud-ouest de la forêt. Ouvrez son coffre puis rapportez-lui vos observations.",
+      "objectives": [
+        {
+          "id": "reserve",
+          "description": "Ouvrir la réserve au sud-ouest de la forêt",
+          "event": "chest_opened",
+          "subjects": [
+            "forest_herb_cache"
+          ]
+        }
+      ],
+      "reward": {
+        "experience": 40,
+        "gold": 30,
+        "items": [
+          {
+            "id": "high_potion",
+            "quantity": 1
+          }
+        ]
+      },
+      "kind": "side"
+    },
+    {
+      "id": "quiet_grove",
+      "name": "Apaiser les lisières",
+      "description": "L’archiviste s’inquiète des corbeaux, des ronces animées et des spectres de Sylve. Apaisez ces trois groupes puis revenez le voir.",
+      "objectives": [
+        {
+          "id": "threats",
+          "description": "Vaincre les corbeaux, le gardien des ronces et les spectres",
+          "event": "encounter_cleared",
+          "subjects": [
+            "forest_ravens",
+            "forest_briar",
+            "ruins_wisps"
+          ],
+          "required": 3
+        }
+      ],
+      "reward": {
+        "experience": 80,
+        "gold": 45,
+        "items": [
+          {
+            "id": "ether",
+            "quantity": 1
+          }
+        ]
+      },
+      "kind": "side"
     }
   ],
   "shops": [
@@ -257,6 +388,36 @@
           "buy": 25,
           "sell": 10,
           "stock": 0
+        },
+        {
+          "item": "ether",
+          "buy": 35,
+          "sell": 15,
+          "stock": 6
+        },
+        {
+          "item": "high_potion",
+          "buy": 30,
+          "sell": 12,
+          "stock": 6
+        },
+        {
+          "item": "antidote",
+          "buy": 8,
+          "sell": 3,
+          "stock": 8
+        },
+        {
+          "item": "linen_hood",
+          "buy": 35,
+          "sell": 15,
+          "stock": 4
+        },
+        {
+          "item": "round_shield",
+          "buy": 45,
+          "sell": 20,
+          "stock": 2
         }
       ]
     }
@@ -329,8 +490,8 @@
             },
             {
               "id": "claim_sanctuary",
-              "label": "Conclure notre aventure",
-              "next": "ending",
+              "label": "Recevoir la récompense de Sylve",
+              "next": "root",
               "conditions": [
                 {
                   "quest": "sanctuary",
@@ -343,6 +504,44 @@
                 {
                   "operation": "claim_quest",
                   "reference": "sanctuary"
+                }
+              ]
+            },
+            {
+              "id": "accept_sentinel",
+              "label": "Accepter le dernier défi de la Sentinelle",
+              "next": "sentinel_briefing",
+              "conditions": [
+                {
+                  "quest": "sentinel",
+                  "states": [
+                    "available"
+                  ]
+                }
+              ],
+              "effects": [
+                {
+                  "operation": "accept_quest",
+                  "reference": "sentinel"
+                }
+              ]
+            },
+            {
+              "id": "claim_sentinel",
+              "label": "Conclure le serment de Sylve",
+              "next": "ending",
+              "conditions": [
+                {
+                  "quest": "sentinel",
+                  "states": [
+                    "completed"
+                  ]
+                }
+              ],
+              "effects": [
+                {
+                  "operation": "claim_quest",
+                  "reference": "sentinel"
                 },
                 {
                   "operation": "set_flag",
@@ -383,12 +582,38 @@
         },
         {
           "id": "ending",
-          "text": "Les routes sont sûres et l’inscription de Sylve a retrouvé sa voix. Votre groupe a achevé ce voyage. Merci, compagnons de Clairval.",
+          "text": "La Sentinelle reconnaît votre serment. Sylve vous confie son sceau ; les routes sont sûres et sa mémoire sera transmise. Votre groupe a achevé le voyage. Merci, compagnons de Clairval.",
           "choices": [
             {
               "id": "explore",
               "label": "Continuer à explorer",
               "next": null,
+              "conditions": [],
+              "effects": []
+            }
+          ]
+        },
+        {
+          "id": "sentinel_briefing",
+          "text": "La Sentinelle veille au nord des ruines, au-delà du passage dans le premier mur. Ce duel interdit la fuite. Reposez-vous ici et préparez vos potions avant de partir.",
+          "choices": [
+            {
+              "id": "tactics",
+              "label": "Comment se protéger de son attaque ?",
+              "next": "sentinel_tactics",
+              "conditions": [],
+              "effects": []
+            }
+          ]
+        },
+        {
+          "id": "sentinel_tactics",
+          "text": "Quand la Sentinelle lève son arme, son prochain tour déclenche un balayage sur tout le groupe. Au signal de charge, choisissez Défendre : les dégâts sont réduits de moitié. Profitez des tours de préparation pour attaquer ou soigner.",
+          "choices": [
+            {
+              "id": "continue",
+              "label": "Préparer le groupe",
+              "next": "root",
               "conditions": [],
               "effects": []
             }
@@ -505,6 +730,44 @@
               ]
             },
             {
+              "id": "accept_grove",
+              "label": "Accepter : apaiser les lisières",
+              "next": "root",
+              "conditions": [
+                {
+                  "quest": "quiet_grove",
+                  "states": [
+                    "available"
+                  ]
+                }
+              ],
+              "effects": [
+                {
+                  "operation": "accept_quest",
+                  "reference": "quiet_grove"
+                }
+              ]
+            },
+            {
+              "id": "claim_grove",
+              "label": "Recevoir la récompense",
+              "next": "root",
+              "conditions": [
+                {
+                  "quest": "quiet_grove",
+                  "states": [
+                    "completed"
+                  ]
+                }
+              ],
+              "effects": [
+                {
+                  "operation": "claim_quest",
+                  "reference": "quiet_grove"
+                }
+              ]
+            },
+            {
               "id": "leave",
               "label": "Repartir",
               "next": null,
@@ -515,11 +778,68 @@
         },
         {
           "id": "read",
-          "text": "« Que ceux qui traversent Sylve protègent les chemins et transmettent notre mémoire. » Les mots restent gravés dans votre esprit.",
+          "text": "« Que ceux qui traversent Sylve protègent les chemins et transmettent notre mémoire. » Au nord, une gardienne scellée porte une immense glaive. Rapportez d’abord ces mots et votre victoire sur les gardiens à Éline.",
           "choices": [
             {
               "id": "leave",
               "label": "Quitter la stèle",
+              "next": null,
+              "conditions": [],
+              "effects": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "herbalist",
+      "start": "root",
+      "nodes": [
+        {
+          "id": "root",
+          "text": "Je suis Tala, herboriste de Clairval. Ma réserve se trouve au sud-ouest de la forêt. Pourriez-vous vérifier son coffre ? Les éthers rendent des PM ; les antidotes soignent le poison pendant les combats.",
+          "choices": [
+            {
+              "id": "accept",
+              "label": "Accepter la mission",
+              "next": "root",
+              "conditions": [
+                {
+                  "quest": "herbal_route",
+                  "states": [
+                    "available"
+                  ]
+                }
+              ],
+              "effects": [
+                {
+                  "operation": "accept_quest",
+                  "reference": "herbal_route"
+                }
+              ]
+            },
+            {
+              "id": "claim",
+              "label": "Recevoir la récompense",
+              "next": "root",
+              "conditions": [
+                {
+                  "quest": "herbal_route",
+                  "states": [
+                    "completed"
+                  ]
+                }
+              ],
+              "effects": [
+                {
+                  "operation": "claim_quest",
+                  "reference": "herbal_route"
+                }
+              ]
+            },
+            {
+              "id": "leave",
+              "label": "Repartir",
               "next": null,
               "conditions": [],
               "effects": []
@@ -533,7 +853,8 @@
     "mira_village": "eline",
     "village_guard": "oren",
     "forest_traveler": "traveler",
-    "ruins_scholar": "scholar"
+    "ruins_scholar": "scholar",
+    "village_herbalist": "herbalist"
   },
   "flags": [
     "inscription_lue",
@@ -542,10 +863,24 @@
   "flag_conditions": [
     {
       "flag": "adventure_complete",
-      "quest": "sanctuary",
+      "quest": "sentinel",
       "states": [
         "rewarded"
       ]
+    }
+  ],
+  "encounter_gates": [
+    {
+      "encounter": "ruins_sentinel",
+      "conditions": [
+        {
+          "quest": "sentinel",
+          "states": [
+            "active"
+          ]
+        }
+      ],
+      "message": "La Sentinelle demeure scellée. Remettez la quête de Sylve à Éline, puis acceptez son dernier défi à Clairval."
     }
   ]
 }

@@ -59,6 +59,7 @@ class Element(StrEnum):
 
 
 class StatusKind(StrEnum):
+    CHARGING = "charging"
     POISON = "poison"
     BURN = "burn"
     SLEEP = "sleep"
@@ -208,6 +209,7 @@ class EnemyDefinition:
 
 
 class EventKind(StrEnum):
+    MANA_RESTORED = "mana_restored"
     DAMAGE = "damage"
     MISS = "miss"
     HEAL = "heal"
@@ -271,11 +273,14 @@ class Ability:
     targeting: TargetRule
     effects: tuple[Effect, ...]
     magical: bool = False
+    required_status: str = ""
 
     def __post_init__(self) -> None:
         require_text(self.id)
         require_text(self.name)
         require_integer(self.cost)
+        if self.required_status:
+            require_text(self.required_status)
         object.__setattr__(self, "effects", tuple(self.effects))
         if not self.effects or not isinstance(self.targeting, TargetRule):
             raise DomainError("Une compétence nécessite un ciblage et des effets.")

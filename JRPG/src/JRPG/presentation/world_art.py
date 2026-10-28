@@ -3,6 +3,7 @@
 from dataclasses import dataclass
 from importlib.resources import files
 from io import BytesIO
+from itertools import pairwise
 from math import isfinite
 
 import pygame
@@ -19,15 +20,15 @@ class Registration:
                 raise ValueError("Les coordonnées de recalage doivent être finies.")
             if len(axis) < 2 or axis[0] != (0, 0) or axis[-1] != (1, 1):
                 raise ValueError("Un recalage doit couvrir l'image entière.")
-            if any(a[0] >= b[0] or a[1] >= b[1] for a, b in zip(axis, axis[1:])):
+            if any(a[0] >= b[0] or a[1] >= b[1] for a, b in pairwise(axis)):
                 raise ValueError("Un recalage doit rester strictement croissant.")
 
     def apply(self, image: pygame.Surface, size: tuple[int, int]) -> pygame.Surface:
         if min(size) <= 0:
             raise ValueError("Dimensions du décor invalides.")
         result = pygame.Surface(size)
-        for left, right in zip(self.columns, self.columns[1:]):
-            for top, bottom in zip(self.rows, self.rows[1:]):
+        for left, right in pairwise(self.columns):
+            for top, bottom in pairwise(self.rows):
                 source = pygame.Rect(
                     round(left[0] * image.width),
                     round(top[0] * image.height),

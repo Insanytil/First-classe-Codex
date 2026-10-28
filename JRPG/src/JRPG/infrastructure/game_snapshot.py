@@ -19,7 +19,7 @@ from JRPG.infrastructure.world_content import create_exploration_session
 
 class GameSnapshotMapper:
     VERSION = 1
-    CONTENT_VERSION = 1
+    CONTENT_VERSION = 3
 
     def capture(self, session: ExplorationSession) -> GameSnapshot:
         if session.active_encounter is not None or session.story is None:
@@ -58,7 +58,10 @@ class GameSnapshotMapper:
     def restore(self, snapshot: GameSnapshot) -> ExplorationSession:
         try:
             if snapshot.version != self.VERSION or snapshot.content_version != self.CONTENT_VERSION:
-                raise SaveError("Version de sauvegarde ou de contenu non prise en charge.")
+                raise SaveError(
+                    "Version de sauvegarde ou de contenu non prise en charge. "
+                    "Commencez une nouvelle partie."
+                )
             if not isfinite(snapshot.play_seconds) or snapshot.play_seconds < 0:
                 raise SaveError("Durée de jeu invalide.")
             fresh = create_exploration_session()

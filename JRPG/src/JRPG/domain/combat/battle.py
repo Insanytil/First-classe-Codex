@@ -70,6 +70,11 @@ class Battle:
             if status.id in known_statuses and known_statuses[status.id] != status:
                 raise BattleRuleError("Définitions d'état contradictoires.")
             known_statuses[status.id] = status
+        if any(
+            ability.required_status and ability.required_status not in known_statuses
+            for ability in (*abilities, *(entry.ability for entry in consumables))
+        ):
+            raise BattleRuleError("Préparation de compétence inconnue.")
         bag = Inventory(items)
         for entry in bag.stacks:
             if entry.item.id in self._consumables:
@@ -212,6 +217,10 @@ class Battle:
             if command.targets:
                 raise InvalidTarget("Cette action ne cible personne.")
         else:
+            if ability.required_status and not any(
+                status.definition.id == ability.required_status for status in actor.statuses
+            ):
+                raise BattleRuleError("Cette compétence nécessite une préparation active.")
             candidates = {fighter.id for fighter in self._targets(actor, ability.targeting)}
             targets = set(command.targets)
             if not targets or len(targets) != len(command.targets) or not targets <= candidates:

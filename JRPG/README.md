@@ -2,7 +2,7 @@
 
 Référence normative : [CAHIER_DES_CHARGES_RPG_PYGAME_CODEX.md](../CAHIER_DES_CHARGES_RPG_PYGAME_CODEX.md).
 Le projet `JRPG/` propose trois cartes reliées, quatre héros, des combats jouables,
-deux quêtes principales, une recherche secondaire, du commerce et des sauvegardes.
+trois quêtes principales, une recherche secondaire, du commerce et des sauvegardes.
 Le prototype historique `poo/` et ses assets sont préservés. La phase 5 est validée
 par l'utilisateur ; la phase 6 est en cours. Ari, Lyra, Mira et Nox utilisent
 désormais des atlas peints originaux, inspirés des sprites et prompts historiques.
@@ -43,7 +43,12 @@ vend des potions et équipements. Éline permet aussi de se reposer gratuitement
 Dans la forêt, le voyageur propose une recherche de coffre sur la rive ouest,
 au nord du pont. Traversez le pont puis continuez vers l'est pour atteindre les
 ruines. Lisez l'inscription auprès de l'archiviste, au sud de la cour, et vainquez
-les gardiens. Revenez chez Éline pour conclure le voyage. Les faits déjà accomplis
+les gardiens. Revenez chez Éline pour remettre cette quête et accepter
+**Le serment de la Sentinelle**. Reposez-vous, puis retournez au nord des ruines
+pour affronter la Sentinelle. Ce combat interdit la fuite. Quand la charge est
+annoncée, utilisez **Défendre** avant son prochain tour pour réduire les dégâts
+du balayage collectif. Revenez ensuite chez Éline pour recevoir le Sceau de Sylve
+et conclure le voyage. Les faits déjà accomplis
 comptent aussi si une quête est acceptée plus tard.
 
 | Contrôle | Action |
@@ -153,8 +158,8 @@ Les tests SDL utilisent le pilote dummy. Ils couvrent notamment une aventure
 complète avec sauvegarde intermédiaire, reprise, conclusion et refus de doublons,
 les fichiers corrompus et la conservation de l'ancien fichier en cas d'échec
 simulé du remplacement. Résultats locaux Windows/Python 3.15.2 :
-**248 tests réussis, Ruff et mypy strict OK**. La couverture mesurée à la fin de
-la phase 5 était de 92 % ; elle n'a pas été remesurée pour ce lot artistique.
+**269 tests réussis, couverture globale 92 % (branches incluses), Ruff et mypy
+strict OK**.
 
 Les quatre héros ont chacun 16 poses de marche et 8 poses d'action, sur fond
 transparent. Les atlas sont embarqués dans `src/JRPG/infrastructure/content/art/`.
@@ -166,6 +171,13 @@ Les [prompts des cartes](docs/art/WORLD_PROMPTS.md) et l'
 décors, leur alignement sur les collisions et la reprise des animations.
 Un [aperçu animé hors ligne](docs/previews/animations.html) montre les cartes
 au repos ainsi que les attaques du loup et du flan.
+La [Sentinelle et sa quête](docs/adr/0009-sentinelle-et-conclusion.md) ajoutent
+un dernier défi avec attaque annoncée et récompense unique.
+[Aperçu de la préparation](docs/previews/sentinel-charge.png).
+[Validation et recette du boss](docs/VALIDATION_PHASE_6_SENTINEL.md).
+
+Le contenu des sauvegardes est désormais en version 2. Les anciennes sauvegardes
+ne sont pas migrées : relancez une nouvelle partie, puis sauvegardez avec F5.
 Pour reproduire le découpage à partir des sources conservées :
 
 ```bash
@@ -181,10 +193,11 @@ uv run --no-sync python tools/preview_exploration.py
 uv run --no-sync python tools/preview_battle.py
 uv run --no-sync python tools/preview_progression.py
 uv run --no-sync python tools/preview_living_world.py
+uv run --no-sync python tools/preview_sentinel.py
 ```
 
 Le build reste une commande de l'utilisateur : `uv build`. Il doit embarquer
 les cartes, `adventure.json` et le dossier `art/`. Aucun nouveau build ni résultat CI distant n'est
 présumé. Voir [VALIDATION_PHASE_5.md](docs/VALIDATION_PHASE_5.md) pour la recette.
-La phase 6 est autorisée et en cours : contenu final, boss jouable,
+La phase 6 est autorisée et en cours : catalogue complet du MVP,
 équilibrage, son, performances et distribution desktop restent à finaliser.

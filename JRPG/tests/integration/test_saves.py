@@ -121,10 +121,29 @@ def test_full_adventure_save_load_then_finish_does_not_duplicate_rewards(tmp_pat
     session.interact()
     walk_to(session, "forest_to_village")
     session.interact()
-    speak(session, "mira_village", "claim_sanctuary")
-    assert "adventure_complete" in session.world.state.flags
+    conversation = speak(session, "mira_village", "claim_sanctuary")
+    assert "adventure_complete" not in session.world.state.flags
     assert session.story.quests.status("sanctuary") == QuestStatus.REWARDED
     assert session.inventory.quantity("bronze_ring") == 1
+    conversation.choose("accept_sentinel")
+    conversation.choose("tactics")
+    conversation.choose("continue")
+    conversation.choose("rest")
+    walk_to(session, "village_to_forest")
+    session.interact()
+    walk_to(session, "forest_to_ruins")
+    session.interact()
+    walk_to(session, "ruins_sentinel")
+    session.interact()
+    finish_battle(session, guard=True)
+    assert session.finish_encounter().outcome == "victory"
+    walk_to(session, "ruins_to_forest")
+    session.interact()
+    walk_to(session, "forest_to_village")
+    session.interact()
+    speak(session, "mira_village", "claim_sentinel")
+    assert "adventure_complete" in session.world.state.flags
+    assert session.inventory.quantity("sylve_sigil") == 1
     saves.save(3, session)
     restored = saves.load(3)
     assert restored.story is not None
@@ -134,7 +153,7 @@ def test_full_adventure_save_load_then_finish_does_not_duplicate_rewards(tmp_pat
         tuple(member.experience for member in restored.party.members),
     )
     with pytest.raises(ValueError):
-        speak(restored, "mira_village", "claim_sanctuary")
+        speak(restored, "mira_village", "claim_sentinel")
     assert (
         restored.wallet.gold,
         restored.inventory.stacks,
@@ -142,7 +161,7 @@ def test_full_adventure_save_load_then_finish_does_not_duplicate_rewards(tmp_pat
     ) == before
     assert dict(restored.story.shops["oren"].stock)["steel_sword"] == 0
     assert restored.world.state.cleared_encounters == frozenset(
-        {"forest_wolves", "ruins_guardians"}
+        {"forest_wolves", "ruins_guardians", "ruins_sentinel"}
     )
 
 

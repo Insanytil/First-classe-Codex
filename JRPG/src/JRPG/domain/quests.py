@@ -9,6 +9,11 @@ from JRPG.domain.stats import require_integer, require_text
 from JRPG.domain.world import WorldEvent, WorldEventKind, WorldState
 
 
+class QuestKind(StrEnum):
+    MAIN = "main"
+    SIDE = "side"
+
+
 class QuestStatus(StrEnum):
     LOCKED = "locked"
     AVAILABLE = "available"
@@ -44,11 +49,14 @@ class QuestDefinition:
     objectives: tuple[Objective, ...]
     reward: RewardBundle = RewardBundle()
     prerequisites: tuple[str, ...] = ()
+    kind: QuestKind = QuestKind.SIDE
 
     def __post_init__(self) -> None:
         require_text(self.id)
         require_text(self.name)
         require_text(self.description)
+        if not isinstance(self.kind, QuestKind):
+            raise DomainError("Type de quête inconnu.")
         object.__setattr__(self, "objectives", tuple(self.objectives))
         object.__setattr__(self, "prerequisites", tuple(self.prerequisites))
         if not self.objectives or len({entry.id for entry in self.objectives}) != len(

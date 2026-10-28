@@ -115,6 +115,10 @@ class ExplorationSession:
             return InteractionResult(
                 subject, f"Coffre ouvert : {loot or 'aucun objet'}, {subject.gold} pièces."
             )
+        if self.story is not None:
+            reason = self.story.encounter_error(subject.id)
+            if reason is not None:
+                return InteractionResult(subject, reason)
         encounter = self._factory.create(
             subject.id, subject.enemies, self.party, self.inventory, self.wallet
         )

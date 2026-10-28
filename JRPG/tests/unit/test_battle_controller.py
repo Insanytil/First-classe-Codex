@@ -79,7 +79,13 @@ def test_skill_menu_cancel_and_multiple_target_highlighting() -> None:
     view.select(1)
     assert_mode(view, MenuMode.SKILL)
     assert "8 PM" in view.options[0].label
-    view.select(1)
+    view.select(
+        next(
+            index
+            for index, option in enumerate(view.options)
+            if option.commands and option.commands[0].ability_id == "storm"
+        )
+    )
     assert_mode(view, MenuMode.TARGET)
     assert len(view.target_ids) == 3
     view.back()
@@ -87,7 +93,13 @@ def test_skill_menu_cancel_and_multiple_target_highlighting() -> None:
     view.back()
     assert_mode(view, MenuMode.ACTION)
     view.select(1)
-    view.select(1)
+    view.select(
+        next(
+            index
+            for index, option in enumerate(view.options)
+            if option.commands and option.commands[0].ability_id == "storm"
+        )
+    )
     view.confirm()
     assert view.playback is not None
     assert view.playback.result.command.ability_id == "storm"
@@ -98,7 +110,13 @@ def test_revival_disabled_until_a_ko_target_exists_and_items_are_counted() -> No
     view = controller()
     pass_to(view, "mira")
     view.select(1)
-    view.move(1)
+    view.move(
+        next(
+            index
+            for index, option in enumerate(view.options)
+            if option.commands and option.commands[0].ability_id == "revive"
+        )
+    )
     assert "Résurrection" in view.options[view.selected].label
     assert view.options[view.selected].reason is not None
     before = view.encounter.battle.combatants
@@ -185,7 +203,13 @@ def test_moving_off_a_disabled_choice_clears_its_error_message() -> None:
     view = controller()
     pass_to(view, "mira")
     view.select(1)
-    view.move(1)
+    view.move(
+        next(
+            index
+            for index, option in enumerate(view.options)
+            if option.commands and option.commands[0].ability_id == "revive"
+        )
+    )
     view.confirm()
     assert view.options[view.selected].reason is not None
     rejected = view.message

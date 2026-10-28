@@ -17,6 +17,7 @@ from JRPG.infrastructure.validation import ContentError
         ('"item": "potion"', '"item": "ghost"'),
         ('"next": "root"', '"next": "missing"'),
         ('"operation": "rest"', '"operation": "__import__"'),
+        ('"quest": "sentinel"', '"quest": "missing_sentinel"'),
     ],
 )
 def test_invalid_story_references_do_not_compile(old: str, new: str) -> None:

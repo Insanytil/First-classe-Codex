@@ -4,7 +4,7 @@ from collections import deque
 from math import hypot
 
 from JRPG.application.exploration import ExplorationSession
-from JRPG.domain.combat.model import Action, BattleCommand, BattleState, Side
+from JRPG.domain.combat.model import Action, BattleCommand, BattleState, Side, StatusKind
 from JRPG.domain.world import MapPosition, World
 
 
@@ -45,7 +45,9 @@ def walk_to(session: ExplorationSession, identity: str) -> None:
     raise AssertionError(f"Interaction inaccessible : {identity}")
 
 
-def finish_battle(session: ExplorationSession, flee: bool = False, lose: bool = False) -> None:
+def finish_battle(
+    session: ExplorationSession, flee: bool = False, lose: bool = False, guard: bool = False
+) -> None:
     encounter = session.active_encounter
     assert encounter is not None
     battle = encounter.battle
@@ -53,7 +55,36 @@ def finish_battle(session: ExplorationSession, flee: bool = False, lose: bool = 
     for _ in range(250):
         actor = battle.prepare_turn()
         if actor.side == Side.ALLIES:
-            if flee:
+            if guard:
+                legal = battle.legal_commands()
+                charging = any(
+                    f.side == Side.ENEMIES and f.has_status(StatusKind.CHARGING)
+                    for f in battle.combatants
+                    if f.hp
+                )
+                weak = min(
+                    (f for f in battle.combatants if f.side == Side.ALLIES and f.hp),
+                    key=lambda f: f.hp / f.stats.hp,
+                )
+                heal = next(
+                    (
+                        c
+                        for c in legal
+                        if c.ability_id == "cure"
+                        and c.targets == (weak.id,)
+                        and weak.hp < weak.stats.hp * 0.7
+                    ),
+                    None,
+                )
+                skill = next(
+                    (c for c in legal if c.ability_id in {"strike", "fire", "venom"}), None
+                )
+                choice = (
+                    next(c for c in legal if c.action == Action.DEFEND)
+                    if charging
+                    else heal or skill or next(c for c in legal if c.action == Action.ATTACK)
+                )
+            elif flee:
                 choice = BattleCommand(actor.id, battle.turn_id, Action.FLEE)
             elif lose:
                 choice = BattleCommand(actor.id, battle.turn_id, Action.PASS)

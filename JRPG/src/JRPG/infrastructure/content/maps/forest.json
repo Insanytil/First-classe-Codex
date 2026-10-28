@@ -113,6 +113,46 @@
         "wolf",
         "wolf"
       ]
+    },
+    {
+      "id": "forest_ravens",
+      "name": "Corbeaux des lisières",
+      "kind": "encounter",
+      "x": 10,
+      "y": 16,
+      "enemies": [
+        "raven",
+        "raven"
+      ]
+    },
+    {
+      "id": "forest_briar",
+      "name": "Gardien des ronces",
+      "kind": "encounter",
+      "x": 28,
+      "y": 19,
+      "enemies": [
+        "briar",
+        "wolf"
+      ]
+    },
+    {
+      "id": "forest_herb_cache",
+      "name": "Réserve de remèdes",
+      "kind": "chest",
+      "x": 6,
+      "y": 19,
+      "items": [
+        {
+          "id": "antidote",
+          "quantity": 2
+        },
+        {
+          "id": "ether",
+          "quantity": 1
+        }
+      ],
+      "gold": 0
     }
   ],
   "decorations": [

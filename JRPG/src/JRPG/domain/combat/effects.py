@@ -10,6 +10,7 @@ from JRPG.domain.combat.model import (
     EventKind,
     RandomSource,
     StatusDefinition,
+    StatusKind,
     stats_with_statuses,
 )
 from JRPG.domain.errors import DomainError
@@ -92,6 +93,52 @@ class Revive:
         amount = min(amount, clean.stats.hp)
         return replace(clean, hp=amount, defending=False), (
             BattleEvent(EventKind.REVIVED, actor.id, target.id, amount),
+        )
+
+
+@dataclass(frozen=True, slots=True)
+class RestoreMana:
+    amount: int
+
+    def __post_init__(self) -> None:
+        require_integer(self.amount, 1)
+
+    def apply(
+        self, actor: Combatant, target: Combatant, random: RandomSource
+    ) -> tuple[Combatant, tuple[BattleEvent, ...]]:
+        if not target.hp:
+            return target, ()
+        amount = min(self.amount, target.stats.mp - target.mp)
+        return replace(target, mp=target.mp + amount), (
+            BattleEvent(EventKind.MANA_RESTORED, actor.id, target.id, amount),
+        )
+
+
+@dataclass(frozen=True, slots=True)
+class CureStatuses:
+    kinds: frozenset[StatusKind]
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "kinds", frozenset(self.kinds))
+        if not self.kinds or any(not isinstance(kind, StatusKind) for kind in self.kinds):
+            raise DomainError("Altérations à soigner invalides.")
+
+    def apply(
+        self, actor: Combatant, target: Combatant, random: RandomSource
+    ) -> tuple[Combatant, tuple[BattleEvent, ...]]:
+        if not target.hp:
+            return target, ()
+        removed = tuple(
+            status for status in target.statuses if status.definition.kind in self.kinds
+        )
+        return with_statuses(
+            target,
+            tuple(status for status in target.statuses if status.definition.kind not in self.kinds),
+        ), tuple(
+            BattleEvent(
+                EventKind.STATUS_EXPIRED, actor.id, target.id, status_id=status.definition.id
+            )
+            for status in removed
         )
 
 

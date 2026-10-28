@@ -4,13 +4,14 @@ from collections.abc import Callable
 from dataclasses import dataclass
 from enum import StrEnum
 
-from JRPG.application.consumables import use_consumable
+from JRPG.application.consumables import usable_outside_combat, use_consumable
 from JRPG.application.exploration import ExplorationSession
 from JRPG.application.saves import SaveService
 from JRPG.domain.characters import Character
+from JRPG.domain.combat.effects import CureStatuses, Heal, RestoreMana, Revive
 from JRPG.domain.errors import DomainError
 from JRPG.domain.items import EquipmentSlot, ItemCategory
-from JRPG.domain.quests import QuestStatus
+from JRPG.domain.quests import QuestKind, QuestStatus
 
 
 class MenuPage(StrEnum):
@@ -114,6 +115,29 @@ class GameMenu:
             self.selected = (self.selected + amount) % len(self.entries)
             self.message = ""
 
+    def _consumable_details(self, identity: str) -> tuple[str, ...]:
+        definition = next(
+            (
+                entry
+                for entry in self.session.encounter_factory.consumables
+                if entry.item.id == identity
+            ),
+            None,
+        )
+        if definition is None:
+            return ()
+        lines = []
+        for effect in definition.ability.effects:
+            if isinstance(effect, Heal):
+                lines.append(f"Rend jusqu'à {effect.amount} PV.")
+            elif isinstance(effect, RestoreMana):
+                lines.append(f"Rend jusqu'à {effect.amount} PM.")
+            elif isinstance(effect, Revive):
+                lines.append(f"Ressuscite avec {effect.amount} PV.")
+            elif isinstance(effect, CureStatuses):
+                lines.append("Soigne le poison en combat.")
+        return tuple(lines)
+
     def _member(self, identity: str) -> Character:
         for member in self.session.party.members:
             if member.id == identity:
@@ -188,17 +212,23 @@ class GameMenu:
                 )
             return tuple(rows)
         if self.page == MenuPage.INVENTORY:
+            usable = {
+                entry.item.id
+                for entry in self.session.encounter_factory.consumables
+                if usable_outside_combat(entry)
+            }
             return tuple(
                 MenuEntry(
                     stack.item.id,
                     f"{stack.item.name} ×{stack.quantity}",
                     (
                         CATEGORY_LABELS[stack.item.category],
+                        *self._consumable_details(stack.item.id),
                         "Entrée : utiliser"
                         if stack.item.category == ItemCategory.CONSUMABLE
                         else "Voir le menu Équipements.",
                     ),
-                    None
+                    (None if stack.item.id in usable else "Utilisable uniquement en combat.")
                     if stack.item.category == ItemCategory.CONSUMABLE
                     else "Cet objet s'équipe via Équipements.",
                 )
@@ -256,6 +286,7 @@ class GameMenu:
                     f"{quest.name} · {QUEST_LABELS[story.quests.status(quest.id)]}",
                     (
                         quest.description,
+                        "Quête principale" if quest.kind == QuestKind.MAIN else "Quête secondaire",
                         *(
                             f"{objective.description} : "
                             f"{story.quests.progress(objective)}/{objective.required}"
@@ -295,6 +326,7 @@ class GameMenu:
                         (
                             f"Stock : {stock[offer.item.id]}",
                             f"Dans le sac : {owned}",
+                            *self._consumable_details(offer.item.id),
                             "Entrée : acheter une unité"
                             if self.page == MenuPage.BUY
                             else "Entrée : vendre une unité",

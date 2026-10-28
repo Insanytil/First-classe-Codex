@@ -16,8 +16,23 @@ from JRPG.domain.errors import DomainError
 from JRPG.domain.items import Inventory, ItemDefinition
 from JRPG.domain.party import Party
 from JRPG.domain.quests import QuestBook, QuestDefinition
+from JRPG.domain.stats import require_text
 from JRPG.domain.wallet import Wallet
 from JRPG.domain.world import ObjectKind, World, WorldEvent, WorldEventKind, WorldState
+
+
+@dataclass(frozen=True, slots=True)
+class EncounterGate:
+    encounter: str
+    conditions: tuple[DialogueCondition, ...]
+    message: str
+
+    def __post_init__(self) -> None:
+        require_text(self.encounter)
+        require_text(self.message)
+        object.__setattr__(self, "conditions", tuple(self.conditions))
+        if not self.conditions:
+            raise DomainError("Une restriction de rencontre doit avoir une condition.")
 
 
 @dataclass(frozen=True, slots=True)
@@ -29,6 +44,7 @@ class AdventureContent:
     npc_dialogues: tuple[tuple[str, str], ...]
     flags: frozenset[str]
     flag_conditions: tuple[tuple[str, DialogueCondition], ...] = ()
+    encounter_gates: tuple[EncounterGate, ...] = ()
 
     def __post_init__(self) -> None:
         for entries in (self.items, self.quests, self.shops, self.dialogues):
@@ -37,6 +53,17 @@ class AdventureContent:
         quest_ids = {entry.id for entry in self.quests}
         shop_ids = {entry.id for entry in self.shops}
         dialogue_ids = {entry.id for entry in self.dialogues}
+        if len({gate.encounter for gate in self.encounter_gates}) != len(self.encounter_gates):
+            raise DomainError("Restriction de rencontre dupliquée.")
+        for gate in self.encounter_gates:
+            for condition in gate.conditions:
+                if (
+                    condition.quest
+                    and condition.quest not in quest_ids
+                    or condition.flag
+                    and condition.flag not in self.flags
+                ):
+                    raise DomainError("Condition de rencontre sans référence valide.")
         if len(dict(self.npc_dialogues)) != len(self.npc_dialogues) or any(
             identity not in dialogue_ids for _, identity in self.npc_dialogues
         ):
@@ -104,6 +131,11 @@ class AdventureContent:
                     raise DomainError("Objectif de quête sans référence de monde valide.")
         if not world.state.flags <= self.flags:
             raise DomainError("Drapeau narratif inconnu.")
+        if any(
+            gate.encounter not in subjects[WorldEventKind.ENCOUNTER_CLEARED]
+            for gate in self.encounter_gates
+        ):
+            raise DomainError("Restriction attachée à une rencontre absente.")
 
     def item(self, identity: str) -> ItemDefinition:
         for entry in self.items:
@@ -143,6 +175,14 @@ class AdventureProgress:
     def dialogue_for(self, npc_id: str) -> DialogueDefinition | None:
         identity = dict(self.content.npc_dialogues).get(npc_id)
         return next((entry for entry in self.content.dialogues if entry.id == identity), None)
+
+    def encounter_error(self, encounter_id: str) -> str | None:
+        for gate in self.content.encounter_gates:
+            if gate.encounter == encounter_id and not all(
+                self.condition(rule) for rule in gate.conditions
+            ):
+                return gate.message
+        return None
 
     def apply(self, effects: tuple[StoryEffect, ...]) -> StoryResult:
         if not effects:

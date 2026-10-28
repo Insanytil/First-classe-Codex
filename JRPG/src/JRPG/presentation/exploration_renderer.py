@@ -157,7 +157,13 @@ class ExplorationRenderer:
             kind = entry.enemies[0] if entry.enemies else ""
             sheet = ENEMY_SHEETS.get(kind)
             if sheet is not None:
-                self._sprites.draw(surface, sheet[0], (x, y), int(self._ambience.time * 3) % 4, 50)
+                self._sprites.draw(
+                    surface,
+                    sheet[0],
+                    (x, y),
+                    int(self._ambience.time * 3) % 4,
+                    110 if kind == "boss" else 50,
+                )
             else:
                 pygame.draw.ellipse(surface, (126, 144, 125), (x - 12, y - 14, 24, 17))
         else:

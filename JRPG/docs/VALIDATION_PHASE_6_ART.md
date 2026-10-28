@@ -43,7 +43,8 @@ de Nox contient des poses supplémentaires ; huit poses d'action sont retenues.
 Windows, Python 3.15.2 et pygame-ce 2.5.8 existants. Aucune installation.
 
 - 248 tests réussis, dont les contrôles des nouveaux assets et animations.
-- Ruff lint et formatage ; mypy strict.
+- Couverture globale mesurée : 91 %, branches incluses.
+- Ruff lint et formatage ; mypy strict sur 82 fichiers source.
 - Intégrité SHA-256 des sources et atlas, 24 cases non vides par héros.
 - Véritable transparence alpha et marges empêchant les débordements de cases.
 - Chargement à la demande, cache des tailles, correspondance pose/contact.
@@ -53,7 +54,6 @@ Windows, Python 3.15.2 et pygame-ce 2.5.8 existants. Aucune installation.
 - Recalage sans trous, formats très larges/hauts, contact et trajectoires.
 - Instantané complet de session identique avant/après rendu animé au repos.
 
-La couverture de phase 5 n'est pas présentée comme une nouvelle mesure.
 La fluidité et la qualité visuelle des mouvements nécessitent encore un essai
 sur le bureau réel. Le build n'a pas été exécuté ; il doit embarquer `art/`.
 

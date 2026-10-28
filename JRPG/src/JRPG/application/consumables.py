@@ -4,8 +4,8 @@ from dataclasses import replace
 
 from JRPG.application.exploration import ExplorationSession
 from JRPG.domain.characters import Character
-from JRPG.domain.combat.effects import Heal, Revive
-from JRPG.domain.combat.model import Combatant, TargetLife, TargetSide
+from JRPG.domain.combat.effects import Heal, RestoreMana, Revive
+from JRPG.domain.combat.model import Combatant, Consumable, TargetLife, TargetSide
 from JRPG.domain.errors import DomainError
 from JRPG.domain.items import Inventory
 
@@ -13,6 +13,15 @@ from JRPG.domain.items import Inventory
 class NoRandom:
     def randint(self, minimum: int, maximum: int) -> int:
         raise DomainError("Cet effet nécessite un combat.")
+
+
+def usable_outside_combat(definition: Consumable) -> bool:
+    ability = definition.ability
+    return (
+        ability.targeting.side != TargetSide.ENEMY
+        and not ability.targeting.multiple
+        and all(isinstance(effect, (Heal, Revive, RestoreMana)) for effect in ability.effects)
+    )
 
 
 def use_consumable(session: ExplorationSession, item_id: str, character_id: str) -> None:
@@ -25,11 +34,7 @@ def use_consumable(session: ExplorationSession, item_id: str, character_id: str)
     if definition is None or member is None:
         raise DomainError("Objet ou personnage inconnu.")
     ability = definition.ability
-    if (
-        ability.targeting.side == TargetSide.ENEMY
-        or ability.targeting.multiple
-        or any(not isinstance(effect, (Heal, Revive)) for effect in ability.effects)
-    ):
+    if not usable_outside_combat(definition):
         raise DomainError("Objet inutilisable hors combat.")
     if member.is_knocked_out != (ability.targeting.life == TargetLife.KO):
         raise DomainError("Cible incompatible avec cet objet.")

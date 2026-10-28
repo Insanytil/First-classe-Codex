@@ -3,7 +3,7 @@
 import json
 from importlib.resources import files
 
-from JRPG.application.progression import AdventureContent
+from JRPG.application.progression import AdventureContent, EncounterGate
 from JRPG.domain.combat.rewards import RewardBundle
 from JRPG.domain.dialogues import (
     DialogueChoice,
@@ -16,7 +16,7 @@ from JRPG.domain.dialogues import (
 from JRPG.domain.economy import ShopDefinition, ShopOffer
 from JRPG.domain.errors import DomainError
 from JRPG.domain.items import EquipmentSlot, ItemCategory, ItemDefinition, ItemQuantity
-from JRPG.domain.quests import Objective, QuestDefinition, QuestStatus
+from JRPG.domain.quests import Objective, QuestDefinition, QuestKind, QuestStatus
 from JRPG.domain.stats import StatModifiers
 from JRPG.domain.world import WorldEventKind
 from JRPG.infrastructure.validation import ContentError, boolean, integer, record, sequence, text
@@ -83,6 +83,7 @@ def decode_adventure(source: str, base_items: tuple[ItemDefinition, ...]) -> Adv
                     tuple(objectives),
                     RewardBundle(integer(reward["experience"]), integer(reward["gold"]), stacks),
                     tuple(text(key) for key in sequence(entry.get("prerequisites", []))),
+                    QuestKind(text(entry.get("kind", "side"))),
                 )
             )
         shops = []
@@ -121,6 +122,17 @@ def decode_adventure(source: str, base_items: tuple[ItemDefinition, ...]) -> Adv
                 )
                 for rule in (record(raw) for raw in sequence(data.get("flag_conditions", [])))
             ),
+            tuple(
+                EncounterGate(
+                    text(gate["encounter"]),
+                    tuple(
+                        parse_condition(record(condition))
+                        for condition in sequence(gate["conditions"])
+                    ),
+                    text(gate["message"]),
+                )
+                for gate in (record(raw) for raw in sequence(data.get("encounter_gates", [])))
+            ),
         )
     except (ValueError, TypeError, KeyError) as error:
         raise ContentError(f"Récit invalide : {error}") from error
@@ -136,6 +148,15 @@ def parse_stack(data: dict[str, object], catalog: dict[str, ItemDefinition]) -> 
     return ItemQuantity(catalog[text(data["id"])], integer(data["quantity"]))
 
 
+def parse_condition(data: dict[str, object]) -> DialogueCondition:
+    return DialogueCondition(
+        text(data["quest"]) if "quest" in data else "",
+        frozenset(QuestStatus(text(status)) for status in sequence(data.get("states", []))),
+        text(data["flag"]) if "flag" in data else "",
+        boolean(data.get("present", True)),
+    )
+
+
 def parse_dialogue(data: dict[str, object]) -> DialogueDefinition:
     nodes = []
     for raw in sequence(data["nodes"]):
@@ -146,17 +167,7 @@ def parse_dialogue(data: dict[str, object]) -> DialogueDefinition:
             conditions = []
             for condition_raw in sequence(choice.get("conditions", [])):
                 condition = record(condition_raw)
-                conditions.append(
-                    DialogueCondition(
-                        text(condition["quest"]) if "quest" in condition else "",
-                        frozenset(
-                            QuestStatus(text(status))
-                            for status in sequence(condition.get("states", []))
-                        ),
-                        text(condition["flag"]) if "flag" in condition else "",
-                        boolean(condition.get("present", True)),
-                    )
-                )
+                conditions.append(parse_condition(condition))
             effects = []
             for effect_raw in sequence(choice.get("effects", [])):
                 effect = record(effect_raw)

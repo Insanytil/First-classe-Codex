@@ -1,0 +1,100 @@
+{
+  "version": 1,
+  "generator": "imagegen intégré",
+  "prompts": "docs/art/CREATURE_PROMPTS.md",
+  "creatures": {
+    "wisp": {
+      "file": "wisp.png",
+      "source": "sources/wisp-v1.png",
+      "sha256": "bfdac1126da8991863cbf3a36ae9c53fcc42b0d23a11c4538fc42eff7256fd86",
+      "source_sha256": "a089babeafdebb7b17bfd843e6b99e8b77ee4327c220aabffe1b717fc87ef2cd",
+      "cell": [
+        256,
+        192
+      ],
+      "count": 12,
+      "anchor": [
+        128,
+        184
+      ],
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "action": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ]
+    },
+    "briar": {
+      "file": "briar.png",
+      "source": "sources/briar-v1.png",
+      "sha256": "dcb94dd892901f87f8ccb25ebd653c08ec0db3ec4dc289e3c9be0970503f7f12",
+      "source_sha256": "414d0bb7b606b17ccf20d393f33769e63f6e5254280c36c7754e21c0b5f84cef",
+      "cell": [
+        256,
+        192
+      ],
+      "count": 12,
+      "anchor": [
+        128,
+        184
+      ],
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "action": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ]
+    },
+    "raven": {
+      "file": "raven.png",
+      "source": "sources/raven-v1.png",
+      "sha256": "eab6f7142f7957d47d0ead9666131531509e31ab60ec7879afd0c8b360bc900c",
+      "source_sha256": "5ad07ea72229dfc438c96c1a982a0e540d2ed46e324f167f5b180d82998130fe",
+      "cell": [
+        256,
+        192
+      ],
+      "count": 12,
+      "anchor": [
+        128,
+        184
+      ],
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "action": [
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ]
+    }
+  }
+}

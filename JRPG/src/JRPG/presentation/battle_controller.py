@@ -13,6 +13,7 @@ from JRPG.domain.combat.model import (
     BattleState,
     EventKind,
     Side,
+    StatusKind,
 )
 from JRPG.domain.errors import DomainError
 
@@ -63,7 +64,10 @@ class BattleController:
         self._target_options: tuple[MenuOption, ...] = ()
         self._return_mode = MenuMode.ACTION
         self._enemy_elapsed = 0.0
-        self.log: tuple[str, ...] = ("Les gardiens des ruines vous barrent la route.",)
+        opponents = ", ".join(
+            fighter.name for fighter in encounter.battle.combatants if fighter.side == Side.ENEMIES
+        )
+        self.log: tuple[str, ...] = (f"Adversaires : {opponents}.",)
         encounter.battle.start()
         self._advance()
 
@@ -138,6 +142,20 @@ class BattleController:
         if options:
             self.selected = (self.selected + amount) % len(options)
             self.message = self._selection_hint()
+
+    @property
+    def threat_hint(self) -> str:
+        charging = next(
+            (
+                fighter
+                for fighter in self.displayed
+                if fighter.side == Side.ENEMIES
+                and fighter.hp
+                and fighter.has_status(StatusKind.CHARGING)
+            ),
+            None,
+        )
+        return f"{charging.name} prépare sa frappe : défendez-vous !" if charging else ""
 
     def select(self, index: int) -> None:
         if self.accepting_input and 0 <= index < len(self.options):
@@ -215,6 +233,7 @@ class BattleController:
         self.playback = Playback(result)
         self.message = "Résolution de l'action…"
         names = {fighter.id: fighter.name for fighter in result.combatants}
+        names.update({ability.id: ability.name for ability in self.encounter.abilities})
         self.log = (*self.log, *(describe_event(event, names) for event in result.events))[-80:]
 
     def update(self, elapsed: float) -> None:
@@ -256,6 +275,8 @@ def describe_event(event: BattleEvent, names: dict[str, str]) -> str:
         return f"{target} : −{event.amount} PV ({label}{event.status_id or actor})."
     if event.kind == EventKind.HEAL:
         return f"{target} récupère {event.amount} PV."
+    if event.kind == EventKind.MANA_RESTORED:
+        return f"{target} récupère {event.amount} PM."
     if event.kind == EventKind.REVIVED:
         return f"{target} revient avec {event.amount} PV."
     if event.kind == EventKind.MISS:
@@ -263,9 +284,9 @@ def describe_event(event: BattleEvent, names: dict[str, str]) -> str:
     if event.kind == EventKind.MANA_SPENT:
         return f"{actor} dépense {event.amount} PM."
     if event.kind == EventKind.STATUS_APPLIED:
-        return f"{target} : {event.status_id}."
+        return f"{target} : {names.get(event.status_id, event.status_id)}."
     if event.kind == EventKind.STATUS_EXPIRED:
-        return f"{target} : fin de {event.status_id}."
+        return f"{target} : fin de {names.get(event.status_id, event.status_id)}."
     labels = {
         EventKind.ENEMY_DEFEATED: f"{target} est vaincu.",
         EventKind.KNOCKED_OUT: f"{target} est KO.",

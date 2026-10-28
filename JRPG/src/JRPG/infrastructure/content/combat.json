@@ -1,0 +1,697 @@
+{
+  "version": 1,
+  "statuses": [
+    {
+      "id": "venom",
+      "kind": "poison",
+      "duration": 3,
+      "potency": 7
+    },
+    {
+      "id": "sentinel_charge",
+      "kind": "charging",
+      "duration": 2
+    },
+    {
+      "id": "rally",
+      "kind": "modifier",
+      "duration": 3,
+      "modifiers": {
+        "defense": 8,
+        "resistance": 6
+      }
+    },
+    {
+      "id": "frost_slow",
+      "kind": "modifier",
+      "duration": 3,
+      "modifiers": {
+        "speed": -5
+      }
+    },
+    {
+      "id": "smoke",
+      "kind": "modifier",
+      "duration": 3,
+      "modifiers": {
+        "evasion": 30,
+        "speed": 6
+      }
+    },
+    {
+      "id": "raven_silence",
+      "kind": "silence",
+      "duration": 2
+    }
+  ],
+  "abilities": [
+    {
+      "id": "strike",
+      "name": "Frappe puissante",
+      "cost": 6,
+      "effects": [
+        {
+          "kind": "damage",
+          "power": 24
+        }
+      ]
+    },
+    {
+      "id": "fire",
+      "name": "Feu",
+      "cost": 8,
+      "effects": [
+        {
+          "kind": "damage",
+          "power": 20,
+          "magical": true,
+          "element": "fire"
+        }
+      ],
+      "magical": true
+    },
+    {
+      "id": "storm",
+      "name": "Brasier collectif",
+      "cost": 20,
+      "effects": [
+        {
+          "kind": "damage",
+          "power": 10,
+          "magical": true,
+          "element": "fire"
+        }
+      ],
+      "magical": true,
+      "targeting": {
+        "multiple": true
+      }
+    },
+    {
+      "id": "cure",
+      "name": "Soin",
+      "cost": 7,
+      "effects": [
+        {
+          "kind": "heal",
+          "amount": 65
+        }
+      ],
+      "magical": true,
+      "targeting": {
+        "side": "ally"
+      }
+    },
+    {
+      "id": "revive",
+      "name": "Résurrection",
+      "cost": 15,
+      "effects": [
+        {
+          "kind": "revive",
+          "amount": 45
+        }
+      ],
+      "magical": true,
+      "targeting": {
+        "side": "ally",
+        "life": "ko"
+      }
+    },
+    {
+      "id": "venom",
+      "name": "Lame empoisonnée",
+      "cost": 6,
+      "effects": [
+        {
+          "kind": "damage",
+          "power": 4
+        },
+        {
+          "kind": "status",
+          "status": "venom"
+        }
+      ]
+    },
+    {
+      "id": "cleave",
+      "name": "Fauchage",
+      "cost": 8,
+      "effects": [
+        {
+          "kind": "damage",
+          "power": 8
+        }
+      ],
+      "targeting": {
+        "multiple": true
+      }
+    },
+    {
+      "id": "rally",
+      "name": "Rempart",
+      "cost": 5,
+      "effects": [
+        {
+          "kind": "status",
+          "status": "rally"
+        }
+      ],
+      "targeting": {
+        "side": "self"
+      }
+    },
+    {
+      "id": "frost",
+      "name": "Givre entravant",
+      "cost": 7,
+      "effects": [
+        {
+          "kind": "damage",
+          "power": 14,
+          "magical": true,
+          "element": "ice"
+        },
+        {
+          "kind": "status",
+          "status": "frost_slow"
+        }
+      ],
+      "magical": true
+    },
+    {
+      "id": "purify",
+      "name": "Purification",
+      "cost": 5,
+      "effects": [
+        {
+          "kind": "cure",
+          "kinds": [
+            "poison",
+            "burn",
+            "sleep",
+            "paralysis",
+            "silence"
+          ]
+        }
+      ],
+      "magical": true,
+      "targeting": {
+        "side": "ally"
+      }
+    },
+    {
+      "id": "quickcut",
+      "name": "Entaille vive",
+      "cost": 4,
+      "effects": [
+        {
+          "kind": "damage",
+          "power": 12
+        }
+      ]
+    },
+    {
+      "id": "smoke",
+      "name": "Voile de fumée",
+      "cost": 5,
+      "effects": [
+        {
+          "kind": "status",
+          "status": "smoke"
+        }
+      ],
+      "targeting": {
+        "side": "self"
+      }
+    },
+    {
+      "id": "sentinel_charge",
+      "name": "Préparation du grand balayage",
+      "cost": 0,
+      "effects": [
+        {
+          "kind": "status",
+          "status": "sentinel_charge"
+        }
+      ],
+      "targeting": {
+        "side": "self"
+      }
+    },
+    {
+      "id": "sentinel_cleave",
+      "name": "Grand balayage",
+      "cost": 0,
+      "effects": [
+        {
+          "kind": "damage",
+          "power": 22
+        }
+      ],
+      "targeting": {
+        "multiple": true
+      },
+      "required_status": "sentinel_charge"
+    },
+    {
+      "id": "spark",
+      "name": "Éclat arcanique",
+      "cost": 5,
+      "effects": [
+        {
+          "kind": "damage",
+          "power": 12,
+          "magical": true,
+          "element": "lightning"
+        }
+      ],
+      "magical": true
+    },
+    {
+      "id": "root_crush",
+      "name": "Poing des racines",
+      "cost": 4,
+      "effects": [
+        {
+          "kind": "damage",
+          "power": 18
+        }
+      ]
+    },
+    {
+      "id": "silencing_cry",
+      "name": "Cri étouffant",
+      "cost": 4,
+      "effects": [
+        {
+          "kind": "damage",
+          "power": 3,
+          "magical": true
+        },
+        {
+          "kind": "status",
+          "status": "raven_silence",
+          "chance": 80
+        }
+      ],
+      "magical": true
+    }
+  ],
+  "heroes": [
+    {
+      "id": "ari",
+      "name": "Ari",
+      "class": "guerrier",
+      "class_name": "Guerrier",
+      "stats": {
+        "hp": 180,
+        "mp": 24,
+        "strength": 26,
+        "defense": 14,
+        "magic": 6,
+        "resistance": 8,
+        "speed": 16
+      },
+      "growth": {
+        "hp": 8,
+        "mp": 2,
+        "strength": 1,
+        "defense": 1,
+        "magic": 1,
+        "resistance": 1
+      },
+      "skills": [
+        "strike",
+        "cleave",
+        "rally"
+      ]
+    },
+    {
+      "id": "lyra",
+      "name": "Lyra",
+      "class": "mage",
+      "class_name": "Mage",
+      "stats": {
+        "hp": 110,
+        "mp": 42,
+        "strength": 10,
+        "defense": 7,
+        "magic": 27,
+        "resistance": 16,
+        "speed": 18
+      },
+      "growth": {
+        "hp": 8,
+        "mp": 2,
+        "strength": 1,
+        "defense": 1,
+        "magic": 1,
+        "resistance": 1
+      },
+      "skills": [
+        "fire",
+        "storm",
+        "frost"
+      ]
+    },
+    {
+      "id": "mira",
+      "name": "Mira",
+      "class": "soigneur",
+      "class_name": "Soigneur",
+      "stats": {
+        "hp": 130,
+        "mp": 36,
+        "strength": 13,
+        "defense": 10,
+        "magic": 18,
+        "resistance": 16,
+        "speed": 14
+      },
+      "growth": {
+        "hp": 8,
+        "mp": 2,
+        "strength": 1,
+        "defense": 1,
+        "magic": 1,
+        "resistance": 1
+      },
+      "skills": [
+        "cure",
+        "revive",
+        "purify"
+      ]
+    },
+    {
+      "id": "nox",
+      "name": "Nox",
+      "class": "voleur",
+      "class_name": "Voleur",
+      "stats": {
+        "hp": 120,
+        "mp": 24,
+        "strength": 22,
+        "defense": 9,
+        "magic": 8,
+        "resistance": 8,
+        "speed": 24,
+        "accuracy": 100,
+        "evasion": 5,
+        "critical": 15
+      },
+      "growth": {
+        "hp": 8,
+        "mp": 2,
+        "strength": 1,
+        "defense": 1,
+        "magic": 1,
+        "resistance": 1
+      },
+      "skills": [
+        "venom",
+        "quickcut",
+        "smoke"
+      ]
+    }
+  ],
+  "consumables": [
+    {
+      "id": "potion",
+      "name": "Potion",
+      "ability": {
+        "id": "potion_heal",
+        "name": "Potion",
+        "cost": 0,
+        "effects": [
+          {
+            "kind": "heal",
+            "amount": 60
+          }
+        ],
+        "targeting": {
+          "side": "ally"
+        }
+      }
+    },
+    {
+      "id": "phoenix",
+      "name": "Plume de vie",
+      "ability": {
+        "id": "phoenix_revive",
+        "name": "Plume de vie",
+        "cost": 0,
+        "effects": [
+          {
+            "kind": "revive",
+            "amount": 40
+          }
+        ],
+        "targeting": {
+          "side": "ally",
+          "life": "ko"
+        }
+      }
+    },
+    {
+      "id": "ether",
+      "name": "Éther",
+      "ability": {
+        "id": "ether_mana",
+        "name": "Éther",
+        "cost": 0,
+        "effects": [
+          {
+            "kind": "mana",
+            "amount": 25
+          }
+        ],
+        "targeting": {
+          "side": "ally"
+        }
+      }
+    },
+    {
+      "id": "high_potion",
+      "name": "Grande potion",
+      "ability": {
+        "id": "high_potion_heal",
+        "name": "Grande potion",
+        "cost": 0,
+        "effects": [
+          {
+            "kind": "heal",
+            "amount": 120
+          }
+        ],
+        "targeting": {
+          "side": "ally"
+        }
+      }
+    },
+    {
+      "id": "antidote",
+      "name": "Antidote",
+      "ability": {
+        "id": "antidote_cure",
+        "name": "Antidote",
+        "cost": 0,
+        "effects": [
+          {
+            "kind": "cure",
+            "kinds": [
+              "poison"
+            ]
+          }
+        ],
+        "targeting": {
+          "side": "ally"
+        }
+      }
+    }
+  ],
+  "enemies": [
+    {
+      "id": "wolf",
+      "name": "Loup des ruines",
+      "stats": {
+        "hp": 95,
+        "mp": 0,
+        "strength": 22,
+        "defense": 9,
+        "magic": 4,
+        "resistance": 8,
+        "speed": 12
+      },
+      "skills": [],
+      "resistances": {
+        "fire": 150
+      },
+      "profile": "regular"
+    },
+    {
+      "id": "slime",
+      "name": "Flan sylvestre",
+      "stats": {
+        "hp": 120,
+        "mp": 18,
+        "strength": 18,
+        "defense": 12,
+        "magic": 15,
+        "resistance": 12,
+        "speed": 8
+      },
+      "skills": [
+        "venom"
+      ],
+      "resistances": {
+        "fire": 50
+      },
+      "profile": "regular"
+    },
+    {
+      "id": "wisp",
+      "name": "Spectre arcanique",
+      "stats": {
+        "hp": 100,
+        "mp": 30,
+        "strength": 9,
+        "defense": 8,
+        "magic": 22,
+        "resistance": 18,
+        "speed": 17
+      },
+      "skills": [
+        "spark"
+      ],
+      "resistances": {
+        "lightning": 50,
+        "ice": 150
+      },
+      "profile": "regular"
+    },
+    {
+      "id": "briar",
+      "name": "Gardien des ronces",
+      "stats": {
+        "hp": 185,
+        "mp": 16,
+        "strength": 23,
+        "defense": 23,
+        "magic": 5,
+        "resistance": 9,
+        "speed": 7
+      },
+      "skills": [
+        "root_crush"
+      ],
+      "resistances": {
+        "fire": 150,
+        "ice": 50
+      },
+      "profile": "regular"
+    },
+    {
+      "id": "raven",
+      "name": "Corbeau du silence",
+      "stats": {
+        "hp": 85,
+        "mp": 20,
+        "strength": 19,
+        "defense": 7,
+        "magic": 14,
+        "resistance": 12,
+        "speed": 25,
+        "accuracy": 95,
+        "evasion": 10,
+        "critical": 5
+      },
+      "skills": [
+        "silencing_cry"
+      ],
+      "resistances": {
+        "lightning": 150
+      },
+      "profile": "regular"
+    },
+    {
+      "id": "boss",
+      "name": "Sentinelle de Sylve",
+      "stats": {
+        "hp": 780,
+        "mp": 0,
+        "strength": 26,
+        "defense": 20,
+        "magic": 8,
+        "resistance": 14,
+        "speed": 10,
+        "accuracy": 100,
+        "evasion": 0,
+        "critical": 0
+      },
+      "skills": [
+        "sentinel_charge",
+        "sentinel_cleave"
+      ],
+      "resistances": {},
+      "profile": "sentinel"
+    }
+  ],
+  "profiles": [
+    {
+      "id": "regular",
+      "experience_per_enemy": 40,
+      "gold_per_enemy": 15,
+      "allow_flee": true,
+      "guaranteed": [
+        {
+          "id": "potion",
+          "quantity": 1
+        }
+      ],
+      "weighted": [
+        {
+          "weight": 2
+        },
+        {
+          "weight": 1,
+          "id": "potion",
+          "quantity": 1
+        }
+      ],
+      "boss": false
+    },
+    {
+      "id": "sentinel",
+      "experience_per_enemy": 200,
+      "gold_per_enemy": 120,
+      "allow_flee": false,
+      "guaranteed": [
+        {
+          "id": "potion",
+          "quantity": 2
+        },
+        {
+          "id": "phoenix",
+          "quantity": 1
+        }
+      ],
+      "telegraph": {
+        "preparation": "sentinel_charge",
+        "attack": "sentinel_cleave",
+        "status": "sentinel_charge"
+      },
+      "boss": true
+    }
+  ],
+  "initial_items": [
+    {
+      "id": "potion",
+      "quantity": 3
+    },
+    {
+      "id": "phoenix",
+      "quantity": 1
+    }
+  ]
+}
