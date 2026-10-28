@@ -13,12 +13,13 @@ class AtlasSpec:
     count: int = 1
     anchor: tuple[int, int] | None = None
     folder: str = "legacy"
+    action_start: int = 0
 
 
 SHEETS = {
-    "wisp": AtlasSpec((256, 192), 12, (128, 184), "creatures"),
-    "briar": AtlasSpec((256, 192), 12, (128, 184), "creatures"),
-    "raven": AtlasSpec((256, 192), 12, (128, 184), "creatures"),
+    "wisp": AtlasSpec((256, 192), 12, (128, 184), "creatures", 4),
+    "briar": AtlasSpec((256, 192), 12, (128, 184), "creatures", 4),
+    "raven": AtlasSpec((256, 192), 12, (128, 184), "creatures", 4),
     "wolf": AtlasSpec((224, 256), 4),
     "flan": AtlasSpec((224, 256), 4),
     "boss": AtlasSpec((768, 512), 4, (384, 502)),

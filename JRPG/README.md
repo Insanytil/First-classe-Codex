@@ -2,12 +2,16 @@
 
 Référence normative : [CAHIER_DES_CHARGES_RPG_PYGAME_CODEX.md](../CAHIER_DES_CHARGES_RPG_PYGAME_CODEX.md).
 Le projet `JRPG/` propose trois cartes reliées, quatre héros, des combats jouables,
-trois quêtes principales, une recherche secondaire, du commerce et des sauvegardes.
+une campagne principale en trois chapitres, trois quêtes secondaires, du commerce
+et des sauvegardes.
 Le prototype historique `poo/` et ses assets sont préservés. La phase 5 est validée
 par l'utilisateur ; la phase 6 est en cours. Ari, Lyra, Mira et Nox utilisent
 désormais des atlas peints originaux, inspirés des sprites et prompts historiques.
 Les loups et flans reprennent leurs sprites et attaques de `poo`. Les trois cartes
 ont de nouvelles peintures, avec eau, feuillage, fumée et lumières animés.
+Spectres, gardiens des ronces et corbeaux complètent le bestiaire avec des atlas
+peints originaux. Le catalogue comporte douze compétences de héros, quinze objets
+dont dix équipements, et cinq PNJ interactifs.
 
 ## Lancer
 
@@ -50,6 +54,12 @@ annoncée, utilisez **Défendre** avant son prochain tour pour réduire les dég
 du balayage collectif. Revenez ensuite chez Éline pour recevoir le Sceau de Sylve
 et conclure le voyage. Les faits déjà accomplis
 comptent aussi si une quête est acceptée plus tard.
+
+Tala, au sud-est du carrefour de Clairval, propose une deuxième quête secondaire :
+vérifier la réserve de remèdes au sud-ouest de la forêt. L'archiviste propose
+« Apaiser les lisières » : vaincre les corbeaux au sud-ouest de la forêt, le gardien
+des ronces au sud-est, puis les spectres à l'est des ruines. Les spectres craignent
+le givre, les ronces le feu ; les corbeaux peuvent infliger le silence.
 
 | Contrôle | Action |
 | --- | --- |
@@ -158,7 +168,7 @@ Les tests SDL utilisent le pilote dummy. Ils couvrent notamment une aventure
 complète avec sauvegarde intermédiaire, reprise, conclusion et refus de doublons,
 les fichiers corrompus et la conservation de l'ancien fichier en cas d'échec
 simulé du remplacement. Résultats locaux Windows/Python 3.15.2 :
-**269 tests réussis, couverture globale 92 % (branches incluses), Ruff et mypy
+**299 tests réussis, couverture globale 91 % (branches incluses), Ruff et mypy
 strict OK**.
 
 Les quatre héros ont chacun 16 poses de marche et 8 poses d'action, sur fond
@@ -175,8 +185,11 @@ La [Sentinelle et sa quête](docs/adr/0009-sentinelle-et-conclusion.md) ajoutent
 un dernier défi avec attaque annoncée et récompense unique.
 [Aperçu de la préparation](docs/previews/sentinel-charge.png).
 [Validation et recette du boss](docs/VALIDATION_PHASE_6_SENTINEL.md).
+Le [catalogue du MVP](docs/VALIDATION_PHASE_6_CONTENT.md), son
+[ADR](docs/adr/0010-catalogue-mvp.md) et le [guide d'extension](docs/EXTENDING_CONTENT.md)
+décrivent les contenus ajoutés et leur validation. [Aperçu du bestiaire](docs/previews/bestiary.png).
 
-Le contenu des sauvegardes est désormais en version 2. Les anciennes sauvegardes
+Le contenu des sauvegardes est désormais en version 3. Les anciennes sauvegardes
 ne sont pas migrées : relancez une nouvelle partie, puis sauvegardez avec F5.
 Pour reproduire le découpage à partir des sources conservées :
 
@@ -194,10 +207,12 @@ uv run --no-sync python tools/preview_battle.py
 uv run --no-sync python tools/preview_progression.py
 uv run --no-sync python tools/preview_living_world.py
 uv run --no-sync python tools/preview_sentinel.py
+uv run --no-sync python tools/preview_catalog.py
+uv run --no-sync python tools/audit_content.py
 ```
 
 Le build reste une commande de l'utilisateur : `uv build`. Il doit embarquer
-les cartes, `adventure.json` et le dossier `art/`. Aucun nouveau build ni résultat CI distant n'est
+les cartes, `combat.json`, `adventure.json` et le dossier `art/`. Aucun nouveau build ni résultat CI distant n'est
 présumé. Voir [VALIDATION_PHASE_5.md](docs/VALIDATION_PHASE_5.md) pour la recette.
-La phase 6 est autorisée et en cours : catalogue complet du MVP,
-équilibrage, son, performances et distribution desktop restent à finaliser.
+La phase 6 est autorisée et en cours : équilibrage global, durée réelle de jeu,
+écran titre/options, son, performances et distribution desktop restent à finaliser.

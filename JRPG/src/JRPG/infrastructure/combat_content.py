@@ -61,6 +61,11 @@ def unique(entries: list[str], label: str) -> None:
         raise ContentError(f"Identifiant dupliqué : {label}.")
 
 
+def known_fields(data: dict[str, object], names: str) -> None:
+    if set(data) - set(names.split()):
+        raise ContentError("Champs inconnus dans le catalogue de combat.")
+
+
 def modifiers(value: object) -> StatModifiers:
     data = record(value)
     if any(type(number) is not int for number in data.values()):
@@ -69,6 +74,7 @@ def modifiers(value: object) -> StatModifiers:
 
 
 def targeting(data: dict[str, object]) -> TargetRule:
+    known_fields(data, "side life multiple")
     return TargetRule(
         TargetSide(text(data.get("side", "enemy"))),
         TargetLife(text(data.get("life", "alive"))),
@@ -78,6 +84,17 @@ def targeting(data: dict[str, object]) -> TargetRule:
 
 def effect(data: dict[str, object], statuses: dict[str, StatusDefinition]) -> Effect:
     kind = text(data["kind"])
+    fields = {
+        "damage": "kind power magical element",
+        "heal": "kind amount",
+        "revive": "kind amount",
+        "mana": "kind amount",
+        "cure": "kind kinds",
+        "status": "kind status chance",
+    }
+    if kind not in fields:
+        raise ContentError(f"Effet inconnu : {kind}.")
+    known_fields(data, fields[kind])
     if kind == "damage":
         return Damage(
             integer(data.get("power", 0)),
@@ -98,6 +115,7 @@ def effect(data: dict[str, object], statuses: dict[str, StatusDefinition]) -> Ef
 
 
 def ability(data: dict[str, object], statuses: dict[str, StatusDefinition]) -> Ability:
+    known_fields(data, "id name cost targeting effects magical required_status description")
     required = text(data["required_status"]) if "required_status" in data else ""
     if required and required not in statuses:
         raise ContentError("Préparation de compétence inconnue.")
@@ -109,6 +127,7 @@ def ability(data: dict[str, object], statuses: dict[str, StatusDefinition]) -> A
         tuple(effect(record(raw), statuses) for raw in sequence(data["effects"])),
         boolean(data.get("magical", False)),
         required,
+        text(data["description"]) if "description" in data else "",
     )
 
 
@@ -119,10 +138,15 @@ def stack(data: dict[str, object], items: dict[str, ItemDefinition]) -> ItemQuan
 def decode_combat(source: str) -> CombatCatalog:
     try:
         data = record(json.loads(source))
+        known_fields(
+            data, "version statuses abilities heroes consumables profiles enemies initial_items"
+        )
         if integer(data["version"]) != 1:
             raise ContentError("Version du catalogue de combat inconnue.")
         raw_statuses = [record(raw) for raw in sequence(data["statuses"])]
         unique([text(raw["id"]) for raw in raw_statuses], "état")
+        for status_data in raw_statuses:
+            known_fields(status_data, "id kind duration potency modifiers")
         statuses = {
             text(raw["id"]): StatusDefinition(
                 text(raw["id"]),
@@ -136,9 +160,11 @@ def decode_combat(source: str) -> CombatCatalog:
         abilities = tuple(ability(record(raw), statuses) for raw in sequence(data["abilities"]))
         unique([entry.id for entry in abilities], "compétence")
         skills = {entry.id for entry in abilities}
+        by_skill = {entry.id: entry for entry in abilities}
         heroes = []
         for raw in sequence(data["heroes"]):
             hero = record(raw)
+            known_fields(hero, "id name class class_name stats growth skills")
             stats = CharacterStats(
                 **{key: integer(value) for key, value in record(hero["stats"]).items()}
             )
@@ -163,13 +189,21 @@ def decode_combat(source: str) -> CombatCatalog:
             for raw in (record(value) for value in sequence(data["consumables"]))
         )
         unique([entry.item.id for entry in consumables], "consommable")
+        for raw in sequence(data["consumables"]):
+            known_fields(record(raw), "id name ability")
         items = {entry.item.id: entry.item for entry in consumables}
         profiles = []
         for raw in sequence(data["profiles"]):
             profile = record(raw)
+            known_fields(
+                profile,
+                "id experience_per_enemy gold_per_enemy allow_flee "
+                "guaranteed weighted telegraph boss",
+            )
             pattern = None
             if "telegraph" in profile:
                 telegraph = record(profile["telegraph"])
+                known_fields(telegraph, "preparation attack status")
                 pattern = TelegraphPattern(
                     text(telegraph["preparation"]),
                     text(telegraph["attack"]),
@@ -180,6 +214,18 @@ def decode_combat(source: str) -> CombatCatalog:
                     or pattern.status not in statuses
                 ):
                     raise ContentError("Séquence d'annonce inconnue.")
+                preparation = by_skill[pattern.preparation]
+                if (
+                    preparation.targeting.side != TargetSide.SELF
+                    or not any(
+                        isinstance(entry, ApplyStatus)
+                        and entry.status.id == pattern.status
+                        and entry.status.duration >= 2
+                        for entry in preparation.effects
+                    )
+                    or by_skill[pattern.attack].required_status != pattern.status
+                ):
+                    raise ContentError("Séquence d'annonce incompatible avec les compétences.")
             profiles.append(
                 EncounterProfile(
                     text(profile["id"]),
@@ -204,6 +250,7 @@ def decode_combat(source: str) -> CombatCatalog:
         links = []
         for raw in sequence(data["enemies"]):
             enemy = record(raw)
+            known_fields(enemy, "id name stats skills resistances profile")
             learned = tuple(text(key) for key in sequence(enemy.get("skills", [])))
             unique(list(learned), "compétence ennemie")
             if not set(learned) <= skills:
@@ -211,6 +258,9 @@ def decode_combat(source: str) -> CombatCatalog:
             profile_id = text(enemy["profile"])
             if profile_id not in {entry.id for entry in profiles}:
                 raise ContentError("Profil de rencontre inconnu.")
+            pattern = next(entry.telegraph for entry in profiles if entry.id == profile_id)
+            if pattern is not None and not {pattern.preparation, pattern.attack} <= set(learned):
+                raise ContentError("L'ennemi ne connaît pas sa séquence d'annonce.")
             enemies.append(
                 EnemyDefinition(
                     text(enemy["id"]),

@@ -126,6 +126,8 @@ class GameMenu:
         )
         if definition is None:
             return ()
+        if definition.ability.description:
+            return (definition.ability.description,)
         lines = []
         for effect in definition.ability.effects:
             if isinstance(effect, Heal):
@@ -135,7 +137,7 @@ class GameMenu:
             elif isinstance(effect, Revive):
                 lines.append(f"Ressuscite avec {effect.amount} PV.")
             elif isinstance(effect, CureStatuses):
-                lines.append("Soigne le poison en combat.")
+                lines.append("Soigne certaines altérations en combat.")
         return tuple(lines)
 
     def _member(self, identity: str) -> Character:

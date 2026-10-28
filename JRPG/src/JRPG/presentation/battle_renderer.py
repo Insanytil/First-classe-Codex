@@ -11,7 +11,7 @@ from JRPG.domain.combat.model import Action, EventKind, Outcome, Side, StatusKin
 from JRPG.presentation.attack_animation import attack_pose, contact_frame
 from JRPG.presentation.battle_controller import BattleController, MenuMode, Playback
 from JRPG.presentation.hero_art import HeroArt, action_frame
-from JRPG.presentation.painted_sprites import ENEMY_SHEETS, PaintedSprites, enemy_kind
+from JRPG.presentation.painted_sprites import ENEMY_SHEETS, SHEETS, PaintedSprites, enemy_kind
 from JRPG.presentation.ui import GOLD, INK, JADE, MUTED, UiPainter
 
 
@@ -266,8 +266,7 @@ class BattleRenderer:
                     5 if kind == "slime" else 4,
                 )
                 sheet, height = action, 118 if kind == "boss" else 74
-                if kind in {"wisp", "briar", "raven"}:
-                    monster_frame += 4
+                monster_frame += SHEETS[action].action_start
             self._monsters.draw(surface, sheet, (x, y + 13), monster_frame, height, flip=True)
             return
         if ally:

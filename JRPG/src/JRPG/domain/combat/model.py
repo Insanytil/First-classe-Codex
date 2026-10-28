@@ -274,6 +274,7 @@ class Ability:
     effects: tuple[Effect, ...]
     magical: bool = False
     required_status: str = ""
+    description: str = ""
 
     def __post_init__(self) -> None:
         require_text(self.id)
@@ -281,6 +282,8 @@ class Ability:
         require_integer(self.cost)
         if self.required_status:
             require_text(self.required_status)
+        if self.description:
+            require_text(self.description)
         object.__setattr__(self, "effects", tuple(self.effects))
         if not self.effects or not isinstance(self.targeting, TargetRule):
             raise DomainError("Une compétence nécessite un ciblage et des effets.")

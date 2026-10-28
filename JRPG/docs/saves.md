@@ -21,9 +21,10 @@ Sous Linux/macOS : `$XDG_DATA_HOME/technobel-jrpg/saves`, ou
 `~/.local/share/technobel-jrpg/saves` si la variable n'est pas définie.
 L'emplacement ne dépend pas du dossier depuis lequel le jeu est lancé.
 
-Le format est JSON UTF-8, `version: 1`, `content_version: 2`.
-Le contenu 2 ajoute la Sentinelle et sa quête finale. À la demande de l'utilisateur,
-les anciennes sauvegardes de contenu 1 ne sont pas migrées : leur chargement
+Le format est JSON UTF-8, `version: 1`, `content_version: 3`.
+Le contenu 2 ajoutait la Sentinelle ; le contenu 3 complète le catalogue du MVP.
+À la demande de l'utilisateur, les anciennes sauvegardes de contenus 1 et 2 ne
+sont pas migrées : leur chargement
 affiche une erreur invitant à commencer une nouvelle partie. Aucun fichier ancien
 n'est supprimé automatiquement ; F5 permet d'enregistrer la nouvelle partie.
 Les définitions de contenu restent dans le paquet ; les sauvegardes référencent

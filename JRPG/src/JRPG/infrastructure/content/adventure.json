@@ -303,7 +303,7 @@
     {
       "id": "quiet_grove",
       "name": "Apaiser les lisières",
-      "description": "L’archiviste s’inquiète des corbeaux, des ronces animées et des spectres de Sylve. Apaisez ces trois groupes puis revenez le voir.",
+      "description": "Apaisez les corbeaux au sud-ouest de la forêt, le gardien des ronces au sud-est et les spectres à l’est des ruines. Revenez ensuite chez l’archiviste.",
       "objectives": [
         {
           "id": "threats",
@@ -715,7 +715,7 @@
       "nodes": [
         {
           "id": "root",
-          "text": "Cette pierre parle des anciens gardiens de Sylve. Écoutons-la, puis rendez la route aux voyageurs.",
+          "text": "L’inscription conserve la mémoire de Sylve. Les spectres craignent le givre, les ronces le feu ; le cri des corbeaux empêche de lancer des sorts. Pouvez-vous apaiser ces lisières ?",
           "choices": [
             {
               "id": "read",

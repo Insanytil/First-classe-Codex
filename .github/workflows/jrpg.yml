@@ -22,4 +22,5 @@ jobs:
       - run: uv run ruff format --check .
       - run: uv run mypy
       - run: uv run pytest --cov=JRPG --cov-report=term-missing
+      - run: uv run --no-sync python tools/audit_content.py
       - run: uv build

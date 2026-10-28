@@ -29,6 +29,8 @@ class NoRandom:
     "path,value",
     [
         (("version",), 99),
+        (("abilities", 0, "costs"), 6),
+        (("abilities", 0, "effects", 0, "powers"), 24),
         (("heroes", 0, "stats", "hp"), True),
         (("heroes", 0, "skills"), ["ghost"]),
         (("statuses", 0, "duration"), 0),
@@ -41,6 +43,8 @@ class NoRandom:
         (("consumables", 0, "ability", "cost"), 1),
         (("heroes",), []),
         (("profiles", 0, "guaranteed", 0, "id"), "ghost"),
+        (("profiles", 1, "telegraph", "attack"), "fire"),
+        (("enemies", 5, "skills"), ["fire"]),
         (("statuses", 1, "id"), "venom"),
         (("abilities", 1, "id"), "strike"),
     ],
@@ -101,5 +105,10 @@ def test_cure_preserves_beneficial_effects_and_antidote_only_removes_poison() ->
     assert [status.definition.id for status in cured.statuses] == ["silence", "buff"]
     assert cured.stats.defense == 15 and cured.hp == hero.hp
     assert len(events) == 1 and events[0].status_id == "venom"
+    purified, events = CureStatuses(frozenset({StatusKind.POISON, StatusKind.SILENCE})).apply(
+        hero, hero, NoRandom()
+    )
+    assert [status.definition.id for status in purified.statuses] == ["buff"]
+    assert len(events) == 2
     with pytest.raises(ValueError):
         CureStatuses(frozenset())

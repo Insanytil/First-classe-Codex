@@ -1,5 +1,8 @@
 """Accès aux nouvelles quêtes, rencontres, objets et sauvegardes de contenu 3."""
 
+from unittest.mock import patch
+
+import pygame
 import pytest
 
 from JRPG.application.consumables import use_consumable
@@ -9,6 +12,8 @@ from JRPG.domain.combat.model import Action, BattleCommand, EventKind, Side, Sta
 from JRPG.domain.quests import QuestKind, QuestStatus
 from JRPG.infrastructure.game_snapshot import GameSnapshotMapper
 from JRPG.infrastructure.world_content import create_exploration_session
+from JRPG.presentation.battle_controller import BattleController, Playback
+from JRPG.presentation.battle_scene import BattleScene
 from JRPG.presentation.game_menu import GameMenu, MenuPage
 from tests.world_helpers import finish_battle, walk_to
 
@@ -136,3 +141,56 @@ def test_antidote_in_real_battle_removes_poison_and_consumes_one_unit() -> None:
             battle.execute(BattleCommand(actor.id, battle.turn_id, Action.PASS), encounter.random)
     else:
         pytest.fail("Le consommable n'a pas été testé après application du poison.")
+
+
+@pytest.mark.parametrize("kind", ["wisp", "briar", "raven"])
+def test_new_creature_reaches_its_action_contact_frame(kind: str) -> None:
+    pygame.font.init()
+    session = create_exploration_session()
+    encounter = session.encounter_factory.create(
+        "new_art", (kind,), session.party, session.inventory, session.wallet
+    )
+    controller = BattleController(encounter)
+    scene = BattleScene(lambda: controller)
+    for _ in range(20):
+        if controller.encounter.battle.current is not None and not controller.accepting_input:
+            scene.update(0.35)
+            break
+        if controller.accepting_input:
+            controller.select(5)
+        scene.update(Playback.DURATION)
+    assert controller.playback is not None
+    scene.update(Playback.IMPACT)
+    with patch.object(
+        scene.renderer._monsters, "draw", wraps=scene.renderer._monsters.draw
+    ) as draw:
+        scene.draw_foreground(pygame.Surface((640, 360), pygame.SRCALPHA))
+    frame = next(call.args[3] for call in draw.call_args_list if call.args[1] == kind)
+    assert frame == 8  # Quatre attentes, puis la cinquième pose de l'attaque.
+
+
+def test_ether_uses_the_real_combat_menu_and_reports_mana() -> None:
+    pygame.font.init()
+    session = create_exploration_session()
+    assert session.story is not None
+    nox = next(hero for hero in session.party.members if hero.id == "nox")
+    nox.spend_mana(10)
+    session.inventory.add(session.story.content.item("ether"))
+    encounter = session.encounter_factory.create(
+        "mana_ui", ("briar",), session.party, session.inventory, session.wallet
+    )
+    controller = BattleController(encounter)
+    scene = BattleScene(lambda: controller)
+    controller.select(3)
+    controller.select(
+        next(
+            index
+            for index, option in enumerate(controller.options)
+            if option.commands[0].item_id == "ether"
+        )
+    )
+    controller.click_target("nox")
+    scene.update(Playback.IMPACT)
+    scene.draw_foreground(pygame.Surface((640, 360), pygame.SRCALPHA))
+    assert any("récupère 10 PM" in line for line in controller.log)
+    assert not any(stack.item.id == "ether" for stack in encounter.battle.items)

@@ -134,7 +134,28 @@ class BattleController:
     def focus_hint(self) -> str:
         options = self.options
         if options:
-            return options[self.selected].reason or self.message
+            option = options[self.selected]
+            if option.reason:
+                return option.reason
+            if self.mode in {MenuMode.SKILL, MenuMode.ITEM, MenuMode.TARGET} and option.commands:
+                command = option.commands[0]
+                ability = next(
+                    (entry for entry in self.encounter.abilities if entry.id == command.ability_id),
+                    None,
+                )
+                if command.item_id:
+                    consumable = next(
+                        (
+                            entry
+                            for entry in self.encounter.consumables
+                            if entry.item.id == command.item_id
+                        ),
+                        None,
+                    )
+                    ability = consumable.ability if consumable is not None else None
+                if ability is not None and ability.description:
+                    return ability.description
+            return self.message
         return self.message
 
     def move(self, amount: int) -> None:

@@ -54,7 +54,8 @@
           "kind": "damage",
           "power": 24
         }
-      ]
+      ],
+      "description": "Frappe physique puissante sur un ennemi."
     },
     {
       "id": "fire",
@@ -68,7 +69,8 @@
           "element": "fire"
         }
       ],
-      "magical": true
+      "magical": true,
+      "description": "Sort de feu sur un ennemi."
     },
     {
       "id": "storm",
@@ -85,7 +87,8 @@
       "magical": true,
       "targeting": {
         "multiple": true
-      }
+      },
+      "description": "Sort de feu sur tous les ennemis conscients."
     },
     {
       "id": "cure",
@@ -100,7 +103,8 @@
       "magical": true,
       "targeting": {
         "side": "ally"
-      }
+      },
+      "description": "Rend jusqu’à 65 PV à un allié conscient."
     },
     {
       "id": "revive",
@@ -116,7 +120,8 @@
       "targeting": {
         "side": "ally",
         "life": "ko"
-      }
+      },
+      "description": "Ressuscite un allié avec 45 PV."
     },
     {
       "id": "venom",
@@ -131,7 +136,8 @@
           "kind": "status",
           "status": "venom"
         }
-      ]
+      ],
+      "description": "Frappe puis empoisonne : 7 PV par tour pendant 3 tours."
     },
     {
       "id": "cleave",
@@ -145,7 +151,8 @@
       ],
       "targeting": {
         "multiple": true
-      }
+      },
+      "description": "Frappe physique sur tous les ennemis conscients."
     },
     {
       "id": "rally",
@@ -159,7 +166,8 @@
       ],
       "targeting": {
         "side": "self"
-      }
+      },
+      "description": "Pendant 3 tours : +8 défense et +6 résistance pour le lanceur."
     },
     {
       "id": "frost",
@@ -177,7 +185,8 @@
           "status": "frost_slow"
         }
       ],
-      "magical": true
+      "magical": true,
+      "description": "Dégâts de glace et -5 vitesse à la cible pendant 3 tours."
     },
     {
       "id": "purify",
@@ -198,7 +207,8 @@
       "magical": true,
       "targeting": {
         "side": "ally"
-      }
+      },
+      "description": "Soigne poison, brûlure, sommeil, paralysie et silence d’un allié."
     },
     {
       "id": "quickcut",
@@ -209,7 +219,8 @@
           "kind": "damage",
           "power": 12
         }
-      ]
+      ],
+      "description": "Entaille physique plus forte qu’une attaque, pour 4 PM."
     },
     {
       "id": "smoke",
@@ -223,7 +234,8 @@
       ],
       "targeting": {
         "side": "self"
-      }
+      },
+      "description": "Pendant 3 tours : +30 esquive et +6 vitesse pour le lanceur."
     },
     {
       "id": "sentinel_charge",
@@ -237,7 +249,8 @@
       ],
       "targeting": {
         "side": "self"
-      }
+      },
+      "description": "Annonce un grand balayage au prochain tour. Défendez le groupe."
     },
     {
       "id": "sentinel_cleave",
@@ -252,7 +265,8 @@
       "targeting": {
         "multiple": true
       },
-      "required_status": "sentinel_charge"
+      "required_status": "sentinel_charge",
+      "description": "Balayage physique collectif nécessitant une charge active."
     },
     {
       "id": "spark",
@@ -266,7 +280,8 @@
           "element": "lightning"
         }
       ],
-      "magical": true
+      "magical": true,
+      "description": "Dégâts de foudre sur un ennemi."
     },
     {
       "id": "root_crush",
@@ -277,7 +292,8 @@
           "kind": "damage",
           "power": 18
         }
-      ]
+      ],
+      "description": "Puissant coup physique de racines."
     },
     {
       "id": "silencing_cry",
@@ -295,7 +311,8 @@
           "chance": 80
         }
       ],
-      "magical": true
+      "magical": true,
+      "description": "Dégâts magiques et 80 % de risque de silence pendant 2 tours."
     }
   ],
   "heroes": [
@@ -431,7 +448,8 @@
         ],
         "targeting": {
           "side": "ally"
-        }
+        },
+        "description": "Rend jusqu’à 60 PV."
       }
     },
     {
@@ -450,7 +468,8 @@
         "targeting": {
           "side": "ally",
           "life": "ko"
-        }
+        },
+        "description": "Ressuscite avec 40 PV."
       }
     },
     {
@@ -468,7 +487,8 @@
         ],
         "targeting": {
           "side": "ally"
-        }
+        },
+        "description": "Rend jusqu’à 25 PM."
       }
     },
     {
@@ -486,7 +506,8 @@
         ],
         "targeting": {
           "side": "ally"
-        }
+        },
+        "description": "Rend jusqu’à 120 PV."
       }
     },
     {
@@ -506,7 +527,8 @@
         ],
         "targeting": {
           "side": "ally"
-        }
+        },
+        "description": "Soigne le poison pendant un combat."
       }
     }
   ],
